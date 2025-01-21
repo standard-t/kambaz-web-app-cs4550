@@ -5,7 +5,7 @@ export default function TOC() {
             <h2>Table of Contents</h2>
             <h4>Tara Standard <br />
                 CS4550 Sec 02 <br />
-                <a href="https://github.com/standard-t/kambaz-web-app-cs4550" id="wd-neu-link" target="_blank">Github Repo</a></h4>
+                <a href="https://github.com/standard-t/kambaz-web-app-cs4550/tree/a1" id="wd-neu-link" target="_blank">Github Repo</a></h4>
             <ul>
                 <li>
                     <Link to="/Kambaz/Labs/Lab1">Lab 1</Link>
