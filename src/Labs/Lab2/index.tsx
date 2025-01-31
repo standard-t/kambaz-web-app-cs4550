@@ -1,8 +1,10 @@
+import BootstrapGrids from "./BootstrapGrids";
 import Positions from "./position";
 
 export default function Lab2() {
     return (
         <div id="wd-lab2">
+            <BootstrapGrids />
             <h2 className="wd-blue-background">Lab 2 - Cascading Style Sheets</h2>
             <Positions />
             <h3>Styling with the STYLE attribute</h3>

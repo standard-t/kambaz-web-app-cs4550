@@ -1,4 +1,4 @@
-import Modules from "./Modules";
+import Modules from "../Modules";
 import Status from "./Status";
 
 export default function Home() {
