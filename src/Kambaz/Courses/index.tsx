@@ -12,10 +12,10 @@ export default function Courses() {
             <h2 className="text-danger"> <RxHamburgerMenu className="me-3" /> Course 1234</h2>
             <hr />
             <div className="d-flex">
-                <div>
+                <div className="d-none d-md-block">
                     <CoursesNavigation />
                 </div>
-                <div className="flex-grow-1">
+                <div className="flex-fill">
                     <Routes>
                         <Route path="/" element={<Navigate to="Home" />} />
                         <Route path="Home" element={<Home />} />
