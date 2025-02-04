@@ -15,12 +15,17 @@ export default function Modules() {
                     <ListGroup className="wd-lessons rounded-0">
                         <ListGroup.Item className="wd-lesson p-3 ps-1">
                             <BsGripVertical className=" me-2 fs-2" />
-                            LESSON 1
+                            LEARNING OBJECTIVES
                             <LessonControlButtons />
                         </ListGroup.Item>
                         <ListGroup.Item className="wd-lesson p-3 ps-1">
                             <BsGripVertical className=" me-2 fs-2" />
-                            LESSON 2
+                            Introduction to the course
+                            <LessonControlButtons />
+                        </ListGroup.Item>
+                        <ListGroup.Item className="wd-lesson p-3 ps-1">
+                            <BsGripVertical className=" me-2 fs-2" />
+                            Learn what is web development
                             <LessonControlButtons />
                         </ListGroup.Item>
                     </ListGroup>
@@ -45,46 +50,6 @@ export default function Modules() {
                     </ListGroup>
                 </ListGroup.Item>
             </ListGroup>
-            <ul>
-                <li>
-                    <div>
-                        <h4>Module 1</h4>
-                        <ul>
-                            <li>Lesson 1</li>
-                            <ul>
-                                <li>LEARNING OBJECTIVES</li>
-                                <li>RESOUCRCES</li>
-                                <li>DISCUSSION</li>
-                            </ul>
-                            <li>Lesson 2</li>
-                            <li>Lesson 3</li>
-                            <li>Lesson 4</li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h4>Module 2</h4>
-                        <ul>
-                            <li>Lesson 1</li>
-                            <li>Lesson 2</li>
-                            <li>Lesson 3</li>
-                            <li>Lesson 4</li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h4>Module 3</h4>
-                        <ul>
-                            <li>Lesson 1</li>
-                            <li>Lesson 2</li>
-                            <li>Lesson 3</li>
-                            <li>Lesson 4</li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
         </div>
     );
 }

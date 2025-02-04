@@ -5,6 +5,7 @@ import CoursesNavigation from "./Navigation";
 import AssignmentEditor from "./Assignments/editor";
 import Assignments from "./Assignments";
 import { RxHamburgerMenu } from "react-icons/rx";
+import PeopleTable from "./People/table";
 
 export default function Courses() {
     return (
@@ -26,7 +27,7 @@ export default function Courses() {
                         <Route path="Grades" element={<h3>Grades</h3>} />
                         <Route path="Piazza" element={<h3>Piazza</h3>} />
                         <Route path="Zoom" element={<h3>Zoom</h3>} />
-                        <Route path="People" element={<h3>People</h3>} />
+                        <Route path="People" element={<PeopleTable />} />
                     </Routes>
                 </div>
             </div>
