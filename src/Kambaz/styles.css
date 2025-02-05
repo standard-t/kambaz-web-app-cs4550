@@ -41,6 +41,31 @@
     left: 37px;
 }
 
+.wd-assignment-editor-form {
+    margin-top: 1 !important;
+    width: 65% !important;
+    position: relative;
+    left: 3%;
+}
+
 .wd-assignment-editor-question {
     border: 0px !important;
+}
+
+.wd-assignment-editor-question2 {
+    width: 45% !important;
+}
+
+.push-left {
+    position: relative;
+    right: 23%;
+}
+
+.push-right {
+    position: relative;
+    left: 55%;
+}
+
+.background-gray {
+    background-color: #e7e7e7;
 }

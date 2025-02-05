@@ -21,7 +21,8 @@ export default function Assignments() {
                             <h6 className="me-2">40% of Total</h6>
                             <GoPlus className="fs-4" />
                             <IoEllipsisVertical className="fs-4" />
-                        </div></div>
+                        </div>
+                    </div>
                     <ListGroup className="wd-lessons rounded-0">
                         <a href="#/Kambaz/Courses/1234/Assignments/123" className="text-decoration-none text-reset">
                             <ListGroup.Item className="wd-lesson p-3 ps-1">
