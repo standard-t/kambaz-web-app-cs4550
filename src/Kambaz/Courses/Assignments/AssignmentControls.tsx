@@ -1,6 +1,5 @@
-import { Button, Dropdown } from "react-bootstrap";
-import { FaCheckCircle } from "react-icons/fa";
-import { MdNotInterested } from "react-icons/md";
+import { Button } from "react-bootstrap";
+
 
 export default function ModulesControls() {
     return (

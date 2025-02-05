@@ -5,7 +5,8 @@ import CoursesNavigation from "./Navigation";
 import AssignmentEditor from "./Assignments/editor";
 import Assignments from "./Assignments";
 import { RxHamburgerMenu } from "react-icons/rx";
-import PeopleTable from "./People/table";
+import PeopleTable from "./People/Table";
+
 
 export default function Courses() {
     return (
