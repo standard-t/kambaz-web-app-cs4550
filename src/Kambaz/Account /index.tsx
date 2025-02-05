@@ -12,7 +12,6 @@ export default function Account() {
             <table>
                 <tr>
                     <td valign="top">
-                        <AccountNavigation />
                     </td>
                     <td valign="top">
 

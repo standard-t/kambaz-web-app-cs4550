@@ -23,30 +23,34 @@ export default function Assignments() {
                             <IoEllipsisVertical className="fs-4" />
                         </div></div>
                     <ListGroup className="wd-lessons rounded-0">
-                        <ListGroup.Item className="wd-lesson p-3 ps-1">
-                            <BsGripVertical className=" me-2 fs-2" />
-                            <LuClipboardPen className="text-success fs-4 me-2" />
-                            <LessonControlButtons />
-                            A1 - ENV + HTML <br />
-                            Multiple Modules | <strong> Not available until </strong> May 6 at 12:00am | <br />
-                            <strong>Due</strong> May 13 at 11:59pm | 100 pts
-                        </ListGroup.Item>
-                        <ListGroup.Item className="wd-lesson p-3 ps-1">
-                            <BsGripVertical className=" me-2 fs-2" />
-                            <LuClipboardPen className="text-success fs-4 me-2" />
-                            <LessonControlButtons />
-                            A2 - CSS + BOOTSTRAP <br />
-                            Multiple Modules | <strong> Not available until </strong> May 6 at 12:00am | <br />
-                            <strong>Due</strong> May 13 at 11:59pm | 100 pts
-                        </ListGroup.Item>
-                        <ListGroup.Item className="wd-lesson p-3 ps-1">
-                            <BsGripVertical className=" me-2 fs-2" />
-                            <LuClipboardPen className="text-success fs-4 me-2" />
-                            <LessonControlButtons />
-                            A3 - JAVASCRIPT + REACT <br />
-                            Multiple Modules | <strong> Not available until </strong> May 6 at 12:00am | <br />
-                            <strong>Due</strong> May 13 at 11:59pm | 100 pts
-                        </ListGroup.Item>
+                        <a href="#/Kambaz/Courses/1234/Assignments/123">
+                            <ListGroup.Item className="wd-lesson p-3 ps-1">
+                                <BsGripVertical className=" me-2 fs-2" />
+                                <LuClipboardPen className="text-success fs-4 me-2" />
+                                <LessonControlButtons />
+                                A1 - ENV + HTML <br />
+                                Multiple Modules | <strong> Not available until </strong> May 6 at 12:00am | <br />
+                                <strong>Due</strong> May 13 at 11:59pm | 100 pts
+                            </ListGroup.Item> </a>
+                        <a href="#/Kambaz/Courses/1234/Assignments/123">
+                            <ListGroup.Item className="wd-lesson p-3 ps-1">
+                                <BsGripVertical className=" me-2 fs-2" />
+                                <LuClipboardPen className="text-success fs-4 me-2" />
+                                <LessonControlButtons />
+                                A2 - CSS + BOOTSTRAP <br />
+                                Multiple Modules | <strong> Not available until </strong> May 6 at 12:00am | <br />
+                                <strong>Due</strong> May 13 at 11:59pm | 100 pts
+                            </ListGroup.Item> </a>
+                        <a href="#/Kambaz/Courses/1234/Assignments/123">
+                            <ListGroup.Item className="wd-lesson p-3 ps-1">
+                                <BsGripVertical className=" me-2 fs-2" />
+                                <LuClipboardPen className="text-success fs-4 me-2" />
+                                <LessonControlButtons />
+                                A3 - JAVASCRIPT + REACT <br />
+                                Multiple Modules | <strong> Not available until </strong> May 6 at 12:00am | <br />
+                                <strong>Due</strong> May 13 at 11:59pm | 100 pts
+                            </ListGroup.Item>
+                        </a>
                     </ListGroup>
                 </ListGroup.Item>
             </ListGroup>
@@ -62,22 +66,25 @@ export default function Assignments() {
                             <IoEllipsisVertical className="fs-4" />
                         </div></div>
                     <ListGroup className="wd-lessons rounded-0">
-                        <ListGroup.Item className="wd-lesson p-3 ps-1">
-                            <BsGripVertical className=" me-2 fs-2" />
-                            <LuClipboardPen className="text-success fs-4 me-2" />
-                            <LessonControlButtons />
-                            EXAM1 - MIDTERM <br />
-                            Multiple Modules | <strong> Not available until </strong> May 6 at 12:00am | <br />
-                            <strong>Due</strong> May 13 at 11:59pm | 100 pts
-                        </ListGroup.Item>
-                        <ListGroup.Item className="wd-lesson p-3 ps-1">
-                            <BsGripVertical className=" me-2 fs-2" />
-                            <LuClipboardPen className="text-success fs-4 me-2" />
-                            <LessonControlButtons />
-                            EXAM2 - FINAL <br />
-                            Multiple Modules | <strong> Not available until </strong> May 6 at 12:00am | <br />
-                            <strong>Due</strong> May 13 at 11:59pm | 100 pts
-                        </ListGroup.Item>
+                        <a href="#/Kambaz/Courses/1234/Assignments/123">
+                            <ListGroup.Item className="wd-lesson p-3 ps-1">
+                                <BsGripVertical className=" me-2 fs-2" />
+                                <LuClipboardPen className="text-success fs-4 me-2" />
+                                <LessonControlButtons />
+                                EXAM1 - MIDTERM <br />
+                                Multiple Modules | <strong> Not available until </strong> May 6 at 12:00am | <br />
+                                <strong>Due</strong> May 13 at 11:59pm | 100 pts
+                            </ListGroup.Item></a>
+                        <a href="#/Kambaz/Courses/1234/Assignments/123">
+                            <ListGroup.Item className="wd-lesson p-3 ps-1">
+                                <BsGripVertical className=" me-2 fs-2" />
+                                <LuClipboardPen className="text-success fs-4 me-2" />
+                                <LessonControlButtons />
+                                EXAM2 - FINAL <br />
+                                Multiple Modules | <strong> Not available until </strong> May 6 at 12:00am | <br />
+                                <strong>Due</strong> May 13 at 11:59pm | 100 pts
+                            </ListGroup.Item>
+                        </a>
                     </ListGroup>
                 </ListGroup.Item>
             </ListGroup>
@@ -92,30 +99,33 @@ export default function Assignments() {
                             <IoEllipsisVertical className="fs-4" />
                         </div></div>
                     <ListGroup className="wd-lessons rounded-0">
-                        <ListGroup.Item className="wd-lesson p-3 ps-1">
-                            <BsGripVertical className=" me-2 fs-2" />
-                            <LuClipboardPen className="text-success fs-4 me-2" />
-                            <LessonControlButtons />
-                            DISCUSS1 - ENV + HTML <br />
-                            Multiple Modules | <strong> Not available until </strong> May 6 at 12:00am | <br />
-                            <strong>Due</strong> May 13 at 11:59pm | 100 pts
-                        </ListGroup.Item>
-                        <ListGroup.Item className="wd-lesson p-3 ps-1">
-                            <BsGripVertical className=" me-2 fs-2" />
-                            <LuClipboardPen className="text-success fs-4 me-2" />
-                            <LessonControlButtons />
-                            DISCUSS2 - CSS + BOOTSTRAP <br />
-                            Multiple Modules | <strong> Not available until </strong> May 6 at 12:00am | <br />
-                            <strong>Due</strong> May 13 at 11:59pm | 100 pts
-                        </ListGroup.Item>
-                        <ListGroup.Item className="wd-lesson p-3 ps-1">
-                            <BsGripVertical className=" me-2 fs-2" />
-                            <LuClipboardPen className="text-success fs-4 me-2" />
-                            <LessonControlButtons />
-                            DISCUSS3 - JAVASCRIPT + REACT <br />
-                            Multiple Modules | <strong> Not available until </strong> May 6 at 12:00am | <br />
-                            <strong>Due</strong> May 13 at 11:59pm | 100 pts
-                        </ListGroup.Item>
+                        <a href="#/Kambaz/Courses/1234/Assignments/123">
+                            <ListGroup.Item className="wd-lesson p-3 ps-1">
+                                <BsGripVertical className=" me-2 fs-2" />
+                                <LuClipboardPen className="text-success fs-4 me-2" />
+                                <LessonControlButtons />
+                                DISCUSS1 - ENV + HTML <br />
+                                Multiple Modules | <strong> Not available until </strong> May 6 at 12:00am | <br />
+                                <strong>Due</strong> May 13 at 11:59pm | 100 pts
+                            </ListGroup.Item></a>
+                        <a href="#/Kambaz/Courses/1234/Assignments/123">
+                            <ListGroup.Item className="wd-lesson p-3 ps-1">
+                                <BsGripVertical className=" me-2 fs-2" />
+                                <LuClipboardPen className="text-success fs-4 me-2" />
+                                <LessonControlButtons />
+                                DISCUSS2 - CSS + BOOTSTRAP <br />
+                                Multiple Modules | <strong> Not available until </strong> May 6 at 12:00am | <br />
+                                <strong>Due</strong> May 13 at 11:59pm | 100 pts
+                            </ListGroup.Item> </a>
+                        <a href="#/Kambaz/Courses/1234/Assignments/123">
+                            <ListGroup.Item className="wd-lesson p-3 ps-1">
+                                <BsGripVertical className=" me-2 fs-2" />
+                                <LuClipboardPen className="text-success fs-4 me-2" />
+                                <LessonControlButtons />
+                                DISCUSS3 - JAVASCRIPT + REACT <br />
+                                Multiple Modules | <strong> Not available until </strong> May 6 at 12:00am | <br />
+                                <strong>Due</strong> May 13 at 11:59pm | 100 pts
+                            </ListGroup.Item> </a>
                     </ListGroup>
                 </ListGroup.Item>
             </ListGroup>
