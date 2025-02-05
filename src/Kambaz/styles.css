@@ -40,3 +40,7 @@
     position: relative;
     left: 37px;
 }
+
+.wd-assignment-editor-question {
+    border: 0px !important;
+}

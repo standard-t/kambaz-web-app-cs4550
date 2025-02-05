@@ -16,7 +16,7 @@ export default function Account() {
                     <td valign="top">
 
                         <Routes>
-                            <Route path="/" element={<Navigate to="Signin" />} />
+                            <Route path="/" element={<Navigate to="Profile" />} />
                             <Route path="Signin" element={<Signin />} />
                             <Route path="Signup" element={<Signup />} />
                             <Route path="Profile" element={<Profile />} />
