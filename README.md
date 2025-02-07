@@ -1,50 +1,13 @@
-# React + TypeScript + Vite
+View current project here --> https://tstandard-kambaz-web-app.netlify.app/ 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a front-end web application built with React.js, Bootstrap, JavaScript, and TypeScript, designed to replicate the core functionality of the popular academic management platform Canvas. The app currently focuses on the user interface (UI) for managing courses, assignments, grades, and student profiles, providing a responsive and intuitive design for both students and instructors.
 
-Currently, two official plugins are available:
+Key Features (UI):
+Course management and enrollment interface
+Assignment submission and grading interface
+User profile management UI
+Responsive and modern design with Bootstrap
+Future Development:
+In the future, I will be implementing the back-end of the application using MongoDB, JavaScript, and APIs to enable real-time data storage, retrieval, and user authentication. The goal is to create a fully functional academic management platform with seamless integration between front-end and back-end systems.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+This project demonstrates the use of React.js and TypeScript for dynamic front-end development, while setting the stage for a complete full-stack solution.
