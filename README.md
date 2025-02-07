@@ -1,6 +1,6 @@
 View current project here --> https://a2--tstandard-kambaz-web-app.netlify.app/#/ 
 
-This project is a front-end web application built with React.js, Bootstrap, JavaScript, and TypeScript, designed to replicate the core functionality of the popular academic management platform Canvas. The app currently focuses on the user interface (UI) for managing courses, assignments, grades, and student profiles, providing a responsive and intuitive design for both students and instructors.
+This project is a front-end web application built with HTML, React.js, Bootstrap, JavaScript, and TypeScript, designed to replicate the core functionality of the popular academic management platform Canvas. The app currently focuses on the user interface (UI) for managing courses, assignments, grades, and student profiles, providing a responsive and intuitive design for both students and instructors.
 
 <strong> Key Features (UI): </strong> <br/>
 - Course navigation including modules, assignments, people <br/>
