@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router";
+import { Navigate, Route, Routes, useParams } from "react-router";
 import Home from "./Home";
 import Modules from "./Modules";
 import CoursesNavigation from "./Navigation";
@@ -6,12 +6,17 @@ import AssignmentEditor from "./Assignments/editor";
 import Assignments from "./Assignments";
 import { RxHamburgerMenu } from "react-icons/rx";
 import PeopleTable from "./People/Table";
+import db from "../Database";
+import { useLocation } from "react-router";
 
 
 export default function Courses() {
+    const { cid } = useParams();
+    const { pathname } = useLocation();
+    const course = db.courses.find((course) => course._id === cid);
     return (
         <div id="wd-courses">
-            <h2 className="text-danger"> <RxHamburgerMenu className="me-3" /> Course 1234</h2>
+            <h2 className="text-danger"> <RxHamburgerMenu className="me-3" />{cid} {course && course.name} &gt; {pathname.split("/").pop()} </h2>
             <hr />
             <div className="d-flex">
                 <div className="d-none d-md-block">
