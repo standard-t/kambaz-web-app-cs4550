@@ -1,25 +1,28 @@
 import { Form, ListGroup } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import db from "../../Database"
 
 export default function AssignmentEditor() {
+    const { aid } = useParams();
+    const assignment = db.assignments.find((assignment) => assignment._id === aid);
     return (
         <div>
             <ListGroup className="wd-assignment-editor-form">
                 <ListGroup.Item className="wd-assignment-editor-question">
                     <label htmlFor="wd-assignment-name">Assignment Name</label>
                     <Form.Control id="wd-assignment-name"
-                        value="A1" />
+                        value={assignment?.title} />
                 </ListGroup.Item>
                 <ListGroup.Item className="wd-assignment-editor-question">
                     <textarea id="wd-password"
                         placeholder="password"
                         className="form-control"
-                        value="Complete all the Lab exercises and Kambaz exercises described in Chapter 1. Submit a link to the landing page of your Web application running on Netlify. The landing page should be the Kambaz application with a link to the Lab exercises. The Kambaz application should include a link to navigate back to the landing page."></textarea>
+                        value={assignment?.description}></textarea>
                 </ListGroup.Item>
                 <div className="d-flex justify-content-end me-3 mt-3">
                     <p className="me-3">Points</p>
                     <Form.Control className="wd-assignment-editor-question2" id="wd-assignment-type"
-                        value="100" />
+                        value={assignment?.points} />
                 </div>
                 <div className="form-group mt-3 d-flex justify-content-end me-3">
                     <label htmlFor="sel1" className="me-3">Assignment Group</label>
