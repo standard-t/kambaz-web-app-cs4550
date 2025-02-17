@@ -88,7 +88,7 @@ export default function AssignmentEditor() {
                     <h5 className="push-right mt-3"><strong>Due</strong></h5>
                     <div className="form-group d-flex justify-content-end me-3">
                         <Form.Control type="date"
-                            value="2025-02-05"
+                            value={assignment?.dueDate}
                             id="wd-dob"
                             className="mb-2 wd-assignment-editor-question2" />
                     </div>
@@ -98,7 +98,7 @@ export default function AssignmentEditor() {
                         <h5 className="mt-3"><strong>Available from</strong></h5>
                         <div className="form-group d-flex justify-content-end me-3">
                             <Form.Control type="date"
-                                value="2025-02-05"
+                                value={assignment?.availableFrom}
                                 id="wd-dob"
                                 className="mb-2" />
                         </div>
@@ -107,7 +107,7 @@ export default function AssignmentEditor() {
                         <h5 className=" mt-3"><strong>Until</strong></h5>
                         <div className="form-group d-flex justify-content-end me-3">
                             <Form.Control type="date"
-                                value="2025-02-05"
+                                value={assignment?.availableUntil}
                                 id="wd-dob"
                                 className="mb-2" />
                         </div>

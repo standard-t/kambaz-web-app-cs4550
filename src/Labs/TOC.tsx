@@ -1,29 +1,19 @@
-import { Link } from "react-router";
+import Nav from "react-bootstrap/Nav";
+import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
 export default function TOC() {
+    const { pathname } = useLocation();
     return (
-        <div>
-            <h2>Table of Contents</h2>
-            <h4>Tara Standard <br />
-                CS4550 Sec 02 <br />
-                <a href="https://github.com/standard-t/kambaz-web-app-cs4550/tree/a2" id="wd-github" target="_blank">Github Repo</a></h4>
-            <ul>
-                <li>
-                    <Link to="/Kambaz/Labs/Lab1">Lab 1</Link>
-                </li>
-                <li>
-                    <Link to="/Kambaz/Labs/Lab2">Lab 2</Link>
-                </li>
-                <li>
-                    <Link to="/Kambaz/Labs/Lab3">Lab 3</Link>
-                </li>
-                <li>
-                    <Link to="/Kambaz">Kambaz</Link>
-                </li>
-                <li>
-                    <Link to="/Project">Project</Link>
-                </li>
-
-            </ul>
-        </div>
+        <Nav variant="pills" id="wd-toc">
+            <Nav.Item> <Nav.Link as={Link} to="/Labs/Lab1" id="wd-a1"
+                active={pathname.includes("Lab1")}> Lab 1 </Nav.Link> </Nav.Item>
+            <Nav.Item> <Nav.Link as={Link} to="/Labs/Lab2" id="wd-a2"
+                active={pathname.includes("Lab2")}> Lab 2 </Nav.Link> </Nav.Item>
+            <Nav.Item> <Nav.Link as={Link} to="/Labs/Lab3" id="wd-a3"
+                active={pathname.includes("Lab3")}> Lab 3 </Nav.Link> </Nav.Item>
+            <Nav.Item> <Nav.Link as={Link} to="/Kambaz" id="wd-a3"> Kambaz </Nav.Link> </Nav.Item>
+            <Nav.Item> <Nav.Link href="https://github.com/standard-t/kambaz-web-app-cs4550/tree/a3" target="_blank">GitHub Repo</Nav.Link> </Nav.Item>
+        </Nav>
     );
 }
+

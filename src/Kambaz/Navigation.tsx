@@ -27,8 +27,9 @@ export default function KambazNavigation() {
             <ListGroup.Item
                 action
                 className={`bg-black text-danger border-0 text-center`}
-                href="https://www.northeastern.edu/"
-            >Northeastern</ListGroup.Item>
+                href="https://www.northeastern.edu/">
+                <img src="/images/northeastern.png" width="60px" />
+            </ListGroup.Item>
 
 
             {
