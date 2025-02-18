@@ -24,12 +24,13 @@ import Square from "./Square";
 import Styles from "./Styles";
 import TemplateLiterals from "./TemplateLiterals";
 import TernaryOperator from "./TernaryOperator";
-import TodoItem from "./TodoItem";
 import VariablesAndConstants from "./VariablesAndConstants";
 import VariableTypes from "./VariableTypes";
 import Highlight from "./Highlight";
-import AddPathParameters from "./AddPathParameters";
 import PathParameters from "./PathParameters";
+import TodoItem from "./Todos/TodoItem";
+import TodoList from "./Todos/TodoList";
+
 
 export default function Lab3() {
     console.log('Hello World!');
@@ -57,7 +58,10 @@ export default function Lab3() {
             <FilterFunction />
             <JsonStringify />
             <House />
+            <h3>Todo Item</h3>
             <TodoItem />
+            <hr />
+            <TodoList />
             <Spreading />
             <Destructing />
             <FunctionDestructing />
