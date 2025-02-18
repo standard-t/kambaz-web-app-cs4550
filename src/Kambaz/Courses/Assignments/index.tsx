@@ -1,7 +1,5 @@
 import { ListGroup } from "react-bootstrap";
 import { BsGripVertical } from "react-icons/bs";
-import { GoPlus } from "react-icons/go";
-import { IoEllipsisVertical } from "react-icons/io5";
 import { LuClipboardPen } from "react-icons/lu";
 import LessonControlButtons from "../Modules/LessonControlButtons";
 import AssignmentControls from "./AssignmentControls";

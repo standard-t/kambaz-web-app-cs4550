@@ -1,4 +1,4 @@
-import { ListGroup, ListGroupItem } from "react-bootstrap";
+import { ListGroup } from "react-bootstrap";
 import { Link, useLocation } from "react-router";
 import { RiAccountCircleLine } from "react-icons/ri";
 import { IoMdSpeedometer } from "react-icons/io";
