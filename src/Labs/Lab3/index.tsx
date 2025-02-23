@@ -30,9 +30,11 @@ import Highlight from "./Highlight";
 import PathParameters from "./PathParameters";
 import TodoItem from "./Todos/TodoItem";
 import TodoList from "./Todos/TodoList";
+import { useSelector } from "react-redux";
 
 
 export default function Lab3() {
+    /// breaks page /// const { todos } = useSelector((state: any) => state.todosReducer);
     console.log('Hello World!');
     console.log(House);
     return (
@@ -80,6 +82,7 @@ export default function Lab3() {
             </Highlight>
             <hr />
             <PathParameters />
+
         </div>
     );
 }
