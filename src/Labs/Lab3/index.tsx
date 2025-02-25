@@ -33,8 +33,9 @@ import TodoList from "./Todos/TodoList";
 import { useSelector } from "react-redux";
 
 
+
 export default function Lab3() {
-    /// breaks page /// const { todos } = useSelector((state: any) => state.todosReducer);
+    const { todos } = useSelector((state: any) => state.todosReducer);
     console.log('Hello World!');
     console.log(House);
     return (
@@ -82,7 +83,14 @@ export default function Lab3() {
             </Highlight>
             <hr />
             <PathParameters />
-
+            <ul className="list-group">
+                {todos.map((todo: any) => (
+                    <li className="list-group-item" key={todo.id}>
+                        {todo.title}
+                    </li>
+                ))}
+            </ul>
+            <hr />
         </div>
     );
 }
