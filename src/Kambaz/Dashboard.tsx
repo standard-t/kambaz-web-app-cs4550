@@ -1,18 +1,37 @@
 
-import { Row, Col, Card, Button } from "react-bootstrap";
+import { Row, Col, Card, Button, FormControl } from "react-bootstrap";
 import db from "./Database"
 import { Link } from "react-router-dom";
-export default function Dashboard() {
-    const courses = db.courses;
+import { useState } from "react";
+export default function Dashboard({
+    editCourse,
+    addCourse,
+    deleteCourse,
+    setCourse,
+    courses,
+    course
+}: {
+    editCourse: () => void;
+    addCourse: () => void;
+    deleteCourse: (courseId: string) => void;
+    setCourse: (course: any) => void;
+    courses: any;
+    course: any;
 
+}) {
     return (
         <div id="wd-dashboard">
             <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
+            <h2>Course Editor</h2>
+            <Button variant="success" className="float-end" onClick={editCourse}>Save Changes</Button>
+            <Button variant="primary" className="me-2 float-end" onClick={addCourse}>Add New Course</Button>
+            <FormControl onChange={(e) => { setCourse({ ...course, name: e.target.value }) }} value={course.name} />
+            <FormControl onChange={(e) => { setCourse({ ...course, description: e.target.value }) }} value={course.description} />
             <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2> <hr />
             <div id="wd-dashboard-courses">
                 <div className="wd-dashboard-course">
                     <Row xs={1} md={5} className="g-4">
-                        {courses.map((course) => (<Col className="wd-dashboard-course"
+                        {courses.map((course: any) => (<Col className="wd-dashboard-course"
                             style={{ width: "300px" }}>
                             <Card>
                                 <Link className="wd-dashboard-course-link
@@ -25,7 +44,20 @@ export default function Dashboard() {
                                             {course.name}</Card.Title>
                                         <Card.Text className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}>
                                             {course.description}</Card.Text>
-                                        <Button variant="primary">Go</Button>
+                                        <div className="float-end mb-2">
+                                            <Button variant="warning"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    setCourse(course);
+                                                }}
+                                                className="m-2">Edit</Button>
+                                            <Button variant="danger"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    deleteCourse(course._id);
+                                                }}
+                                            >Delete</Button>
+                                        </div>
                                     </Card.Body>
                                 </Link>
                             </Card>

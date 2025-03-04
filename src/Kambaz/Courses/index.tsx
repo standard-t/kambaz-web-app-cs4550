@@ -1,19 +1,19 @@
 import { Navigate, Route, Routes, useParams } from "react-router";
 import Home from "./Home";
-import Modules from "./Modules";
+
 import CoursesNavigation from "./Navigation";
 import AssignmentEditor from "./Assignments/editor";
 import Assignments from "./Assignments";
 import { RxHamburgerMenu } from "react-icons/rx";
 import PeopleTable from "./People/Table";
-import db from "../Database";
 import { useLocation } from "react-router";
+import Modules from "./Modules";
 
 
-export default function Courses() {
+export default function Courses({ courses }: { courses: any[] }) {
     const { cid } = useParams();
     const { pathname } = useLocation();
-    const course = db.courses.find((course) => course._id === cid);
+    const course = courses.find((course) => course._id === cid);
     return (
         <div id="wd-courses">
             <h2 className="text-danger"> <RxHamburgerMenu className="me-3" />{cid} {course && course.name} &gt; {pathname.split("/").pop()} </h2>
