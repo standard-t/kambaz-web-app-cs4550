@@ -6,14 +6,14 @@ import { BsPlus } from "react-icons/bs";
 import { FaPencil } from "react-icons/fa6";
 
 export default function ModuleControlButtons(
-    { moduleId, deleteModule, setModuleEditMode }: {
+    { moduleId, deleteModule, editModule }: {
         moduleId: string;
         deleteModule: (moduleId: string) => void;
-        setModuleEditMode: (moduleId: string, editing: boolean) => void;
+        editModule: (moduleId: string) => void;
     }) {
     return (
         <div className="float-end">
-            <FaPencil onClick={() => setModuleEditMode(moduleId, true)} className="text-primary me-2" />
+            <FaPencil onClick={() => editModule(moduleId)} className="text-primary me-2" />
             <FaTrash className="text-danger me-2 mb-1"
                 onClick={() => deleteModule(moduleId)} />
             <FaCheckCircle className="text-success" />

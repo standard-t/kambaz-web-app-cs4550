@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router";
-import Account from "./Account ";
+import Account from "./Account";
 import Courses from "./Courses";
 import Dashboard from "./Dashboard";
 import KambazNavigation from "./Navigation";
@@ -8,6 +8,8 @@ import db from "./Database";
 
 import "./styles.css";
 import { useState } from "react";
+import ProtectedRoute from "./Account/ProtectedRoute";
+
 
 export default function Kambaz() {
     const [courses, setCourses] = useState(db.courses);
@@ -48,8 +50,8 @@ export default function Kambaz() {
                 <Routes>
                     <Route path="/" element={<Navigate to="Dashboard" />} />
                     <Route path="Account/*" element={<Account />} />
-                    <Route path="Dashboard" element={<Dashboard editCourse={editCourse} addCourse={addCourse} deleteCourse={deleteCourse} courses={courses} course={course} setCourse={setCourse} />} />
-                    <Route path="Courses/:cid/*" element={<Courses courses={courses} />} />
+                    <Route path="Dashboard" element={<ProtectedRoute><Dashboard editCourse={editCourse} addCourse={addCourse} deleteCourse={deleteCourse} courses={courses} course={course} setCourse={setCourse} /></ProtectedRoute>} />
+                    <Route path="Courses/:cid/*" element={<ProtectedRoute><Courses courses={courses} /></ProtectedRoute>} />
                     <Route path="Labs/*" element={<Labs />} />
                     <Route path="Inbox" element={<h1>Inbox</h1>} />
                     <Route path="Calendar" element={<h1>Calendar</h1>} />
