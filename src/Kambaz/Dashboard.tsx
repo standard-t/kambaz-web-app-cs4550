@@ -5,34 +5,36 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-export default function Dashboard({
-    editCourse,
-    addCourse,
-    deleteCourse,
-    setCourse,
-    courses,
-    course
-}: {
-    editCourse: () => void;
-    addCourse: () => void;
-    deleteCourse: (courseId: string) => void;
-    setCourse: (course: any) => void;
-    courses: any;
-    course: any;
+export default function Dashboard(
+    {
+        editCourse,
+        addCourse,
+        deleteCourse,
+        setCourse,
+        courses,
+        course
+    }: {
+        editCourse: () => void;
+        addCourse: () => void;
+        deleteCourse: (courseId: string) => void;
+        setCourse: (course: any) => void;
+        courses: any;
+        course: any;
 
-}) {
+    }
+) {
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const { enrollments } = db;
     return (
         <div id="wd-dashboard">
             <h1 id="wd-dashboard-title">Dashboard {currentUser.firstName}</h1> <hr />
-            {currentUser && currentUser.role === "ADMIN" && (<>
+            {currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") && (<>
                 <h2>Course Editor</h2>
-                <Button variant="success" className="float-end" onClick={editCourse}>Save Changes</Button>
-                <Button variant="primary" className="me-2 float-end" onClick={addCourse}>Add New Course</Button>
-
-                <FormControl onChange={(e) => { setCourse({ ...course, name: e.target.value }) }} value={course.name} />
-                <FormControl onChange={(e) => { setCourse({ ...course, description: e.target.value }) }} value={course.description} />
+                <Button variant="warning" className="mb-2 float-end" onClick={editCourse}>Update Course</Button>
+                <Button variant="success" className="mb-2 me-2 float-end" onClick={addCourse}>Add New Course</Button>
+                <br />
+                <FormControl className="mb-2" onChange={(e) => { setCourse({ ...course, name: e.target.value }) }} value={course.name} />
+                <FormControl className="mb-4" onChange={(e) => { setCourse({ ...course, description: e.target.value }) }} value={course.description} />
             </>)}
             <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2> <hr />
             <div id="wd-dashboard-courses">
@@ -56,7 +58,7 @@ export default function Dashboard({
                                                 {course.name}</Card.Title>
                                             <Card.Text className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}>
                                                 {course.description}</Card.Text>
-                                            {currentUser && currentUser.role === "ADMIN" && (<>
+                                            {currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") && (<>
                                                 <div className="float-end mb-2">
                                                     <Button variant="warning"
                                                         onClick={(e) => {

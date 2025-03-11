@@ -8,11 +8,14 @@ import { Link, useParams } from "react-router-dom";
 
 
 
+
 export default function Assignments() {
     const { cid } = useParams();
     const assignments = db.assignments.filter((assignment) => assignment.course === cid);
+
     return (
         <div id="wd-assignments">
+
             <AssignmentControls />
             <ListGroup id="wd-assignment-list">
                 {assignments.map((assignment) => (<ListGroup.Item as={Link} to={`/Kambaz/Courses/${cid}/Assignments/${assignment._id}`} className="wd-lesson p-3 ps-1">
