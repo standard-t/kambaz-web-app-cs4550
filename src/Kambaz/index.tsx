@@ -12,7 +12,7 @@ import ProtectedRoute from "./Account/ProtectedRoute";
 
 
 export default function Kambaz() {
-    const [courses, setCourses] = useState(db.courses);
+    const [courses] = useState(db.courses);
     return (
         <div id="wd-kambaz">
             <KambazNavigation />

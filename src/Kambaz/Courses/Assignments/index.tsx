@@ -3,14 +3,13 @@ import { BsGripVertical } from "react-icons/bs";
 import { LuClipboardPen } from "react-icons/lu";
 import AssignmentControls from "./AssignmentControls";
 import { Link, useParams } from "react-router-dom";
-import { deleteAssignment } from "./reducer";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { FaCheckCircle } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import DeleteAssignmentPopUp from "./DeleteAssignmentPopUp";
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+
 
 export default function Assignments() {
     const [show, setShow] = useState(false);
