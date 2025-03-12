@@ -1,11 +1,58 @@
 import { Button, Form, ListGroup } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
-import db from "../../Database"
-import { useSelector } from "react-redux";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { addAssignment, updateAssignment } from "./reducer";
 
 export default function AssignmentEditor() {
-    const { aid } = useParams();
-    const assignment = db.assignments.find((assignment) => assignment._id === aid);
+    const { aid, cid } = useParams();
+    const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+    const [assignment, setAssignment] = useState({
+        title: "New Assignment",
+        description: "New Assignment description",
+        course: cid,
+        _id: Math.random().toString(),
+        points: "",
+        availableFrom: "",
+        availableUntil: "",
+        dueDate: ""
+    });
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    // aid === 'New' doesnt work because any new assignment has name aid so will update or delete together 
+    // editing or creating custom assignments with aid === 'New' doesn't save changes, but editing pre-existing assignments with other aid works 
+
+    useEffect(() => {
+        if (aid === 'New') {
+            // For new assignment, generate a temporary unique ID
+            setAssignment({
+                title: "New Assignment",
+                description: "New Assignment description",
+                course: cid,
+                _id: Math.random().toString(),  // Unique temporary ID for new assignment
+                points: "100",
+                availableFrom: "2025-01-01",
+                availableUntil: "2025-01-01",
+                dueDate: "2025-01-01"
+            });
+        } else {
+            const a = assignments.find((a: any) => a._id === aid);
+            if (a) {
+                setAssignment(a);
+            }
+        }
+    }, [aid, cid, assignments]);
+
+    const save = () => {
+        if (aid === 'New') {
+            dispatch(addAssignment(assignment));
+        } else {
+            dispatch(updateAssignment(assignment));
+        }
+        navigate(`/Kambaz/Courses/${cid}/Assignments`);
+    }
+
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     if (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") {
         return (
@@ -14,6 +61,7 @@ export default function AssignmentEditor() {
                     <ListGroup.Item className="wd-assignment-editor-question">
                         <label htmlFor="wd-assignment-name">Assignment Name</label>
                         <Form.Control id="wd-assignment-name"
+                            onChange={(e) => setAssignment({ ...assignment, title: e.target.value })}
                             value={assignment?.title} />
                     </ListGroup.Item>
                     <ListGroup.Item className="wd-assignment-editor-question">
@@ -25,6 +73,7 @@ export default function AssignmentEditor() {
                     <div className="d-flex justify-content-end me-3 mt-3">
                         <p className="me-3">Points</p>
                         <Form.Control className="wd-assignment-editor-question2" id="wd-assignment-type"
+                            onChange={(e) => setAssignment({ ...assignment, points: e.target.value })}
                             value={assignment?.points} />
                     </div>
                     <div className="form-group mt-3 d-flex justify-content-end me-3">
@@ -91,6 +140,7 @@ export default function AssignmentEditor() {
                         <h5 className="push-right mt-3"><strong>Due</strong></h5>
                         <div className="form-group d-flex justify-content-end me-3">
                             <Form.Control type="date"
+                                onChange={(e) => setAssignment({ ...assignment, dueDate: e.target.value })}
                                 value={assignment?.dueDate}
                                 id="wd-dob"
                                 className="mb-2 wd-assignment-editor-question2" />
@@ -101,6 +151,7 @@ export default function AssignmentEditor() {
                             <h5 className="mt-3"><strong>Available from</strong></h5>
                             <div className="form-group d-flex justify-content-end me-3">
                                 <Form.Control type="date"
+                                    onChange={(e) => setAssignment({ ...assignment, availableFrom: e.target.value })}
                                     value={assignment?.availableFrom}
                                     id="wd-dob"
                                     className="mb-2" />
@@ -110,6 +161,7 @@ export default function AssignmentEditor() {
                             <h5 className=" mt-3"><strong>Until</strong></h5>
                             <div className="form-group d-flex justify-content-end me-3">
                                 <Form.Control type="date"
+                                    onChange={(e) => setAssignment({ ...assignment, availableUntil: e.target.value })}
                                     value={assignment?.availableUntil}
                                     id="wd-dob"
                                     className="mb-2" />
@@ -121,17 +173,17 @@ export default function AssignmentEditor() {
                         <div>
                             <div className="form-group d-flex justify-content-end">
                                 <Link id="wd-cancel-btn"
-                                    to={`/Kambaz/Courses/${assignment?.course}/Assignments`}
+                                    to={`/Kambaz/Courses/${cid}/Assignments`}
                                     className="btn bg-light w-100 mb-2 me-2">
                                     Cancel</Link>
                             </div>
                         </div>
                         <div>
                             <div className="form-group d-flex justify-content-end">
-                                <Link id="wd-cancel-btn"
-                                    to={`/Kambaz/Courses/${assignment?.course}/Assignments`}
+                                <Button id="wd-cancel-btn"
+                                    onClick={save}
                                     className="btn bg-danger text-white w-100 mb-2 me-3">
-                                    Save</Link>
+                                    Save</Button>
                             </div>
                         </div>
                     </div>
