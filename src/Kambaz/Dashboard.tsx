@@ -112,10 +112,6 @@ export default function Dashboard(
                                             }} className="me-2 mb-2">{course.enrolled ? 'Unenroll' : 'Enroll'}</Button>}
                                             {currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") && (<>
                                                 <div className="float-end mb-2">
-                                                    {enrolling && <Button onClick={(e) => {
-                                                        e.preventDefault();
-                                                        enrollInCourse(course, !course.enrolled)
-                                                    }} className="me-2 mb-2">{course.enrolled ? 'Unenroll' : 'Enroll'}</Button>}
                                                     <Button variant="warning"
                                                         onClick={(e) => {
                                                             e.preventDefault();
