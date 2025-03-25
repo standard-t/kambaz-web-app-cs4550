@@ -92,7 +92,7 @@ export default function Dashboard({ courses }: { courses: any[]; }
             <div id="wd-dashboard-courses">
                 <div className="wd-dashboard-course">
                     <Row xs={1} md={5} className="g-4">
-                        {theCourses
+                        {courses
                             .map((course: any) => (<Col className="wd-dashboard-course"
                                 style={{ width: "300px" }}>
                                 <Card>
