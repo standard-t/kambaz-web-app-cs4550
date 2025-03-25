@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { addCourse, updateCourse, deleteCourse } from "./Courses/coursesReducer";
 import { addEnrollment, deleteEnrollment } from "./enrollmentsReducer";
 
-export default function Dashboard(
+export default function Dashboard({ courses }: { courses: any[]; }
 ) {
     const { enrollments } = useSelector((state: any) => state.enrollmentsReducer);
-    const { courses } = useSelector((state: any) => state.coursesReducer);
+    //const { courses } = useSelector((state: any) => state.coursesReducer);
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const [enrolling, setEnrolling] = useState(false);
     const [course, setCourse] = useState({

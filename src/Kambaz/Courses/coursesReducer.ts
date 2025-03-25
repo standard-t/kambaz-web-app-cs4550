@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import db from "../Database";
 const initialState = {
-    courses: db.courses,
+    courses: [],
 };
 const coursesSlice = createSlice({
     name: "courses",
