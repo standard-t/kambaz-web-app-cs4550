@@ -37,6 +37,15 @@ export const findAssignmentsForCourse = async (courseId: string) => {
     return response.data;
 };
 
+export const createAssignmentForCourse = async (courseId: string, assignment: any) => {
+    const response = await axios.post(
+        `${COURSES_API}/${courseId}/assignments`,
+        assignment
+    );
+    return response.data;
+};
+
+
 
 
 

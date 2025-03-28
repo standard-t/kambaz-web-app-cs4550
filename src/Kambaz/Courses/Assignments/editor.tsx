@@ -3,9 +3,14 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { addAssignment, updateAssignment } from "./reducer";
+import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";
+
 
 export default function AssignmentEditor() {
     const { aid, cid } = useParams();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { assignments } = useSelector((state: any) => state.assignmentsReducer);
     const [assignment, setAssignment] = useState({
         title: "New Assignment",
@@ -17,11 +22,30 @@ export default function AssignmentEditor() {
         availableUntil: "",
         dueDate: ""
     });
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
 
-    // aid === 'New' doesnt work because any new assignment has name aid so will update or delete together 
-    // editing or creating custom assignments with aid === 'New' doesn't save changes, but editing pre-existing assignments with other aid works 
+    const createAssignmentForCourse = async () => {
+        if (!cid) return;
+        const newAssignment = {
+            title: assignment.title,
+            description: assignment.description,
+            points: assignment.points,
+            dueDate: assignment.dueDate,
+            availableFrom: assignment.availableFrom,
+            availableUntil: assignment.availableUntil,
+            course: cid
+        };
+        const funcAssignment = await coursesClient.createAssignmentForCourse(cid, newAssignment);
+        dispatch(addAssignment(funcAssignment));
+    };
+
+    const saveChanges = async (assignment: any) => {
+        await assignmentsClient.updateAssignment(assignment);
+        dispatch(updateAssignment(assignment));
+    };
+
+
+
+
 
     useEffect(() => {
         if (aid === 'New') {
@@ -46,9 +70,9 @@ export default function AssignmentEditor() {
 
     const save = () => {
         if (aid === 'New') {
-            dispatch(addAssignment(assignment));
+            createAssignmentForCourse()
         } else {
-            dispatch(updateAssignment(assignment));
+            saveChanges(assignment)
         }
         navigate(`/Kambaz/Courses/${cid}/Assignments`);
     }
@@ -67,6 +91,7 @@ export default function AssignmentEditor() {
                     <ListGroup.Item className="wd-assignment-editor-question">
                         <textarea id="wd-password"
                             placeholder="password"
+                            onChange={(e) => setAssignment({ ...assignment, description: e.target.value })}
                             className="form-control"
                             value={assignment?.description}></textarea>
                     </ListGroup.Item>

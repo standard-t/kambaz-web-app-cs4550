@@ -28,6 +28,7 @@ export default function Kambaz() {
         }
         setCourses(courses);
     };
+
     useEffect(() => {
         fetchCourses();
     }, [currentUser]);
