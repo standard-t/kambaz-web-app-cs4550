@@ -5,49 +5,28 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addEnrollment, deleteEnrollment } from "./enrollmentsReducer";
 
-export default function Dashboard({ courses, course, setCourse, addNewCourse, deleteCourse, updateCourse }: { courses: any[]; course: any; setCourse: (course: any) => void; addNewCourse: () => void; deleteCourse: (course: any) => void; updateCourse: () => void; }
+export default function Dashboard({ allCourses, courses, course, setCourse, addNewCourse, deleteCourse, updateCourse }: { allCourses: any[]; courses: any[]; course: any; setCourse: (course: any) => void; addNewCourse: () => void; deleteCourse: (course: any) => void; updateCourse: () => void; }
 ) {
     //const { enrollments } = useSelector((state: any) => state.enrollmentsReducer);
     //const { courses } = useSelector((state: any) => state.coursesReducer);
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const [enrolling, setEnrolling] = useState(false);
     const [theCourses, setTheCourses] = useState(courses);
+
     const dispatch = useDispatch();
 
 
+    const coursesEnrollingDependent = () => {
+        if (enrolling) {
+            setTheCourses(courses);
+        } else {
+            setTheCourses(allCourses);
+        }
+    }
 
 
-    // const enrollInCourse = (course: any, enrollOrNot: boolean) => {
-    //     if (enrollOrNot) {
-    //         dispatch(addEnrollment({
-    //             user: currentUser._id,
-    //             course: course._id
-    //         }));
-    //     } else {
-    //         const enrollment = enrollments.find((e: any) => e.course === course._id && e.user === currentUser._id);
-    //         dispatch(deleteEnrollment(enrollment._id));
-    //     }
-    // }
 
-    // useEffect(() => {
-    //     if (enrolling) {
-    //         setTheCourses(courses.map((c: any) => {
-    //             // determine if current user is enrolled in c
-    //             const enrolled = enrollments.some(
-    //                 (enrollment: any) =>
-    //                     enrollment.user === currentUser._id
-    //                     && enrollment.course === c._id
-    //             );
-    //             return { ...c, enrolled }
-    //         }))
-    //     } else {
-    //         setTheCourses(courses.filter((course: any) => enrollments.some(
-    //             (enrollment: any) =>
-    //                 enrollment.user === currentUser._id
-    //                 && enrollment.course === course._id
-    //         )).map((c: any) => ({ ...c, enrolled: true })))
-    //     }
-    // }, [enrollments, enrolling]);
+
 
     return (
         <div id="wd-dashboard">
@@ -62,13 +41,13 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse, de
             </>)}
             <div className="d-flex">
                 <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2>
-                <Button className="ms-5" onClick={() => setEnrolling(!enrolling)}>{enrolling ? "My Courses" : "Enrollments"}</Button>
+                <Button className="ms-5" onClick={() => { setEnrolling(!enrolling); coursesEnrollingDependent(); }}>{enrolling ? "My Courses" : "Enrollments"}</Button>
             </div>
             <hr />
             <div id="wd-dashboard-courses">
                 <div className="wd-dashboard-course">
                     <Row xs={1} md={5} className="g-4">
-                        {courses
+                        {theCourses
                             .map((course: any) => (<Col className="wd-dashboard-course"
                                 style={{ width: "300px" }}>
                                 <Card>
@@ -82,7 +61,7 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse, de
                                                 {course.name}</Card.Title>
                                             <Card.Text className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}>
                                                 {course.description}</Card.Text>
-                                            <Button className="me-2 mb-2">Enroll</Button>
+                                            {enrolling && <Button className="me-2 mb-2">Enroll</Button>}
                                             {currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") && (<>
                                                 <div className="float-end mb-2">
                                                     <Button variant="warning"
