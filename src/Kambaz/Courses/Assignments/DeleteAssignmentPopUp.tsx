@@ -1,14 +1,14 @@
 import { Modal, Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { deleteAssignment } from "./reducer";
 
-export default function DeleteAssignmentPopUp({ show,
+
+export default function DeleteAssignmentPopUp({ deleteAssignment, show,
     handleClose, dialogTitle, assignmentId }: {
+        deleteAssignment: (assignmentId: string) => void;
         show: boolean; handleClose: () => void;
         dialogTitle: string;
         assignmentId: string;
     }) {
-    const dispatch = useDispatch();
+
 
     return (
         <div>
@@ -19,10 +19,7 @@ export default function DeleteAssignmentPopUp({ show,
                 <Modal.Footer>
                     <Button variant="secondary"
                         onClick={handleClose}>Cancel</Button>
-                    <Button variant="primary" onClick={() => {
-                        dispatch(deleteAssignment(assignmentId));
-                        handleClose();
-                    }}>Confirm</Button>
+                    <Button variant="primary" onClick={() => { deleteAssignment(assignmentId); handleClose(); }}>Confirm</Button>
                 </Modal.Footer>
-            </Modal></div>);
+            </Modal></div >);
 }
