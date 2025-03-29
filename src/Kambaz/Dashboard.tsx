@@ -3,29 +3,49 @@ import { Row, Col, Card, Button, FormControl } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addEnrollment, deleteEnrollment } from "./enrollmentsReducer";
+import { addEnrollment, deleteEnrollment, setEnrollments } from "./enrollmentsReducer";
+import * as userClient from "./Account/client";
 
-export default function Dashboard({ allCourses, courses, course, setCourse, addNewCourse, deleteCourse, updateCourse }: { allCourses: any[]; courses: any[]; course: any; setCourse: (course: any) => void; addNewCourse: () => void; deleteCourse: (course: any) => void; updateCourse: () => void; }
+export default function Dashboard({ allCourses, course, setCourse, addNewCourse, deleteCourse, updateCourse }: { allCourses: any[]; course: any; setCourse: (course: any) => void; addNewCourse: () => void; deleteCourse: (course: any) => void; updateCourse: () => void; }
 ) {
-    //const { enrollments } = useSelector((state: any) => state.enrollmentsReducer);
+    const { enrollments } = useSelector((state: any) => state.enrollmentsReducer);
     //const { courses } = useSelector((state: any) => state.coursesReducer);
     const { currentUser } = useSelector((state: any) => state.accountReducer);
+
     const [enrolling, setEnrolling] = useState(false);
-    const [theCourses, setTheCourses] = useState(courses);
 
     const dispatch = useDispatch();
 
 
-    const coursesEnrollingDependent = () => {
+    const fetchEnrollments = async () => {
+        const enrollments = await userClient.findMyEnrollments();
+        dispatch(setEnrollments(enrollments));
+    };
+
+    const checkEnrolled = (courseId: string) => {
+        return enrollments.some(
+            (enrollment: { user: string; course: string }) =>
+                enrollment.user === currentUser._id &&
+                enrollment.course === courseId
+        );
+    };
+
+
+    const filteredCourses = () => {
         if (enrolling) {
-            setTheCourses(courses);
+            return allCourses;
         } else {
-            setTheCourses(allCourses);
+            allCourses.map(c => ({ ...c, isEnrolled: checkEnrolled(c._id) }));
+            const enrolledCourses = allCourses.filter((course) => course.isEnrolled);
+            return enrolledCourses;
         }
     }
 
 
 
+    useEffect(() => {
+        fetchEnrollments();
+    }, []);
 
 
     return (
@@ -40,14 +60,14 @@ export default function Dashboard({ allCourses, courses, course, setCourse, addN
                 <FormControl className="mb-4" onChange={(e) => { setCourse({ ...course, description: e.target.value }) }} value={course.description} />
             </>)}
             <div className="d-flex">
-                <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2>
-                <Button className="ms-5" onClick={() => { setEnrolling(!enrolling); coursesEnrollingDependent(); }}>{enrolling ? "My Courses" : "Enrollments"}</Button>
+                <h2 id="wd-dashboard-published">Published Courses ({filteredCourses.length})</h2>
+                <Button className="ms-5" onClick={() => { setEnrolling(!enrolling); }}>{enrolling ? "My Courses" : "Enrollments"}</Button>
             </div>
             <hr />
             <div id="wd-dashboard-courses">
                 <div className="wd-dashboard-course">
                     <Row xs={1} md={5} className="g-4">
-                        {theCourses
+                        {filteredCourses()
                             .map((course: any) => (<Col className="wd-dashboard-course"
                                 style={{ width: "300px" }}>
                                 <Card>

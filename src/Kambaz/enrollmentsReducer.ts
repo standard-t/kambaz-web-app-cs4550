@@ -1,12 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import db from "./Database";
+
 const initialState = {
-    enrollments: db.enrollments,
+    enrollments: [],
 };
 const enrollmentsSlice = createSlice({
     name: "enrollments",
     initialState,
     reducers: {
+        setEnrollments: (state, action) => {
+            state.enrollments = action.payload;
+        },
         addEnrollment: (state, { payload: enrollment }) => {
             state.enrollments = [...state.enrollments,
             { ...enrollment, _id: Math.random().toString() }] as any;
@@ -18,6 +21,6 @@ const enrollmentsSlice = createSlice({
     },
 });
 
-export const { addEnrollment, deleteEnrollment } =
+export const { addEnrollment, deleteEnrollment, setEnrollments } =
     enrollmentsSlice.actions;
 export default enrollmentsSlice.reducer;

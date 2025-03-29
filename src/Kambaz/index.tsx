@@ -40,6 +40,7 @@ export default function Kambaz() {
         setAllCourses(courses);
     };
 
+
     useEffect(() => {
         fetchCourses();
         fetchAllCourses();
@@ -103,7 +104,7 @@ export default function Kambaz() {
                     <Routes>
                         <Route path="/" element={<Navigate to="Dashboard" />} />
                         <Route path="Account/*" element={<Account />} />
-                        <Route path="Dashboard" element={<ProtectedRoute><Dashboard allCourses={allCourses} courses={myCourses} course={course} setCourse={setCourse} addNewCourse={addNewCourse} deleteCourse={deleteCourse} updateCourse={updateCourse} /></ProtectedRoute>} />
+                        <Route path="Dashboard" element={<ProtectedRoute><Dashboard allCourses={allCourses} course={course} setCourse={setCourse} addNewCourse={addNewCourse} deleteCourse={deleteCourse} updateCourse={updateCourse} /></ProtectedRoute>} />
                         <Route path="Courses/:cid/*" element={<ProtectedRoute><Courses courses={myCourses} /></ProtectedRoute>} />
                         <Route path="Labs/*" element={<Labs />} />
                         <Route path="Inbox" element={<h1>Inbox</h1>} />
