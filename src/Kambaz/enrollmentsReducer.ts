@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     enrollments: [],
 };
+
 const enrollmentsSlice = createSlice({
     name: "enrollments",
     initialState,

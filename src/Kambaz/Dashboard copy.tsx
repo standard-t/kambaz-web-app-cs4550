@@ -8,7 +8,7 @@ import * as coursesClient from "./Courses/client";
 import * as accountClient from "./Account/client";
 
 
-export default function Dashboard({ allCourses, myCourses, setMyCourses, course, setCourse, addNewCourse, deleteCourse, updateCourse }: { allCourses: any[], myCourses: any[], course: any; setMyCourses: (course: any) => void; setCourse: (course: any) => void; addNewCourse: () => void; deleteCourse: (course: any) => void; updateCourse: () => void; }
+export default function Dashboard({ courses, course, setCourse, addNewCourse, deleteCourse, updateCourse }: { courses: any[], course: any; setCourse: (course: any) => void; addNewCourse: () => void; deleteCourse: (course: any) => void; updateCourse: () => void; }
 ) {
 
 
@@ -33,27 +33,32 @@ export default function Dashboard({ allCourses, myCourses, setMyCourses, course,
     };
 
 
-    const filteredCourses = enrolling ? allCourses : myCourses;
+    const filteredCourses = enrolling
+        ? courses
+        : courses.filter((course) =>
+            enrollments.some(
+                (enrollment: any) =>
+                    enrollment.user === currentUser._id &&
+                    enrollment.course === course._id
+            )
+        );
 
     const isEnrolled = (courseId: any) => {
-        return myCourses.some(
-            (course: any) =>
-                course._id === courseId
+        return enrollments.some(
+            (enrollment: any) =>
+                enrollment.user === currentUser._id &&
+                enrollment.course === courseId
         );
     };
 
 
     const removeEnrollment = async (enrollmentId: string) => {
         await coursesClient.deleteEnrollment(enrollmentId);
-        const updatedCourses = await accountClient.findMyCourses();
-        setMyCourses(updatedCourses);
         dispatch(deleteEnrollment(enrollmentId));
     }
 
     const makeEnrollment = async (enrollment: any) => {
         await coursesClient.createEnrollment(enrollment);
-        const updatedCourses = await accountClient.findMyCourses();
-        setMyCourses(updatedCourses);
         dispatch(addEnrollment(enrollment));
     }
 
@@ -68,10 +73,6 @@ export default function Dashboard({ allCourses, myCourses, setMyCourses, course,
     };
 
 
-    /// check this over again to make sure createEnrollment and deleteEnrollment functions are working and corresponding with server post/delete
-    /// next steps: implement make enrollment and remove enrollment integrating into enroll/unenroll buttons on cards 
-    /// can retrieve enrollment id for removeEnrollment using getEnrollmentId 
-    /// can create a unique instance of an enrollment using currentUser, courseId, and unique id to feed into make enrollment 
 
 
     useEffect(() => {

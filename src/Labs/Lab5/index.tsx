@@ -1,6 +1,11 @@
 import EnvironmentVariables from "./environmentVariables";
-import WorkingWithArraysAsynchronously from "./FetchingAsynchronously";
+import WorkingWithArraysAsynchronously from "./ArraysAsynchronously";
 import HttpClient from "./HttpClient";
+import WorkingWithObjectsAsynchronously from "./ObjectsAsynchronously";
+import PathParameters from "./PathParameters";
+import QueryParameters from "./QueryParameters";
+import WorkingWithArrays from "./WorkingWithArrays";
+import WorkingWithObjects from "./WorkingWithObjects";
 
 const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
 
@@ -16,6 +21,11 @@ export default function Lab5() {
             </div><hr />
             <EnvironmentVariables />
             <HttpClient />
+            <PathParameters />
+            <QueryParameters />
+            <WorkingWithObjects />
+            <WorkingWithArrays />
+            <WorkingWithObjectsAsynchronously />
             <WorkingWithArraysAsynchronously />
         </div>
     );

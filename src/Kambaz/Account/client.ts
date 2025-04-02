@@ -33,7 +33,7 @@ export const findMyCourses = async () => {
     return data;
 };
 
-export const findMyEnrollments = async () => {
+export const findEnrollments = async () => {
     const { data } = await axiosWithCredentials.get(`${USERS_API}/current/enrollments`);
     return data;
 };

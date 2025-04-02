@@ -16,8 +16,7 @@ import * as userClient from "./Account/client";
 
 export default function Kambaz() {
 
-    const [allCourses, setAllCourses] = useState<any[]>([]);
-    const [myCourses, setMyCourses] = useState<any[]>([]);
+    const [courses, setCourses] = useState<any[]>([]);
 
 
     const { currentUser } = useSelector((state: any) => state.accountReducer);
@@ -30,26 +29,12 @@ export default function Kambaz() {
         } catch (error) {
             console.error(error);
         }
-        setAllCourses(courses);
+        setCourses(courses);
     };
-
-
-
-    const fetchMyCourses = async () => {
-        let courses = [];
-        try {
-            courses = await userClient.findMyCourses();
-        } catch (error) {
-            console.error(error);
-        }
-        setMyCourses(courses);
-    };
-
 
 
     useEffect(() => {
         fetchAllCourses();
-        fetchMyCourses()
     }, [currentUser]);
 
     const [course, setCourse] = useState<any>({
@@ -74,24 +59,17 @@ export default function Kambaz() {
 
     const addNewCourse = async () => {
         const newCourse = await userClient.createCourse(course);
-        setAllCourses([...allCourses, newCourse]);
-        setMyCourses([...myCourses, newCourse]);
+        setCourses([...courses, newCourse]);
     };
 
     const deleteCourse = async (courseId: string) => {
         const status = await courseClient.deleteCourse(courseId);
-        setAllCourses(allCourses.filter((course) => course._id !== courseId));
-        setMyCourses(myCourses.filter((course) => course._id !== courseId));
+        setCourses(courses.filter((course) => course._id !== courseId));
     };
 
     const updateCourse = async () => {
         await courseClient.updateCourse(course);
-        setAllCourses(allCourses.map((c) => {
-            if (c._id === course._id) { return course; }
-            else { return c; }
-        })
-        );
-        setMyCourses(myCourses.map((c) => {
+        setCourses(courses.map((c) => {
             if (c._id === course._id) { return course; }
             else { return c; }
         })
@@ -117,8 +95,8 @@ export default function Kambaz() {
                     <Routes>
                         <Route path="/" element={<Navigate to="Dashboard" />} />
                         <Route path="Account/*" element={<Account />} />
-                        <Route path="Dashboard" element={<ProtectedRoute><Dashboard setMyCourses={setMyCourses} allCourses={allCourses} myCourses={myCourses} course={course} setCourse={setCourse} addNewCourse={addNewCourse} deleteCourse={deleteCourse} updateCourse={updateCourse} /></ProtectedRoute>} />
-                        <Route path="Courses/:cid/*" element={<ProtectedRoute><Courses courses={allCourses} /></ProtectedRoute>} />
+                        <Route path="Dashboard" element={<ProtectedRoute><Dashboard courses={courses} course={course} setCourse={setCourse} addNewCourse={addNewCourse} deleteCourse={deleteCourse} updateCourse={updateCourse} /></ProtectedRoute>} />
+                        <Route path="Courses/:cid/*" element={<ProtectedRoute><Courses courses={courses} /></ProtectedRoute>} />
                         <Route path="Labs/*" element={<Labs />} />
                         <Route path="Inbox" element={<h1>Inbox</h1>} />
                         <Route path="Calendar" element={<h1>Calendar</h1>} />

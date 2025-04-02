@@ -45,16 +45,16 @@ export const createAssignmentForCourse = async (courseId: string, assignment: an
     return response.data;
 };
 
-export const enrollCourse = async (userId: String, courseId: string) => {
+export const createEnrollment = async (enrollment: any) => {
     const response = await axios.post(
-        `${COURSES_API}/${userId}/${courseId}/enrollments`
+        `${COURSES_API}/enrollments`, enrollment
     );
     return response.data;
 };
 
-export const unenrollCourse = async (userId: String, courseId: string) => {
+export const deleteEnrollment = async (enrollmentId: String) => {
     const response = await axios.delete(
-        `${COURSES_API}/${userId}/${courseId}/enrollments`
+        `${COURSES_API}/enrollments/${enrollmentId}`
     );
     return response.data;
 };
