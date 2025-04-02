@@ -52,9 +52,9 @@ export const createEnrollment = async (enrollment: any) => {
     return response.data;
 };
 
-export const deleteEnrollment = async (enrollmentId: String) => {
+export const deleteEnrollment = async (userId: string, courseId: string) => {
     const response = await axios.delete(
-        `${COURSES_API}/enrollments/${enrollmentId}`
+        `${COURSES_API}/${userId}/${courseId}/enrollments`
     );
     return response.data;
 };

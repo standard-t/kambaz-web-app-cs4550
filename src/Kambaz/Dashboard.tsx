@@ -43,11 +43,10 @@ export default function Dashboard({ allCourses, myCourses, setMyCourses, course,
     };
 
 
-    const removeEnrollment = async (enrollmentId: string) => {
-        await coursesClient.deleteEnrollment(enrollmentId);
+    const removeEnrollment = async (courseId: string) => {
+        await coursesClient.deleteEnrollment(currentUser._id, courseId);
         const updatedCourses = await accountClient.findMyCourses();
         setMyCourses(updatedCourses);
-        dispatch(deleteEnrollment(enrollmentId));
     }
 
     const makeEnrollment = async (enrollment: any) => {
@@ -57,15 +56,6 @@ export default function Dashboard({ allCourses, myCourses, setMyCourses, course,
         dispatch(addEnrollment(enrollment));
     }
 
-    const getEnrollmentId = (userId: string, courseId: string): string => {
-        const enrollment = enrollments.find(
-            (enrollment: any) =>
-                enrollment.user === userId &&
-                enrollment.course === courseId
-        );
-
-        return enrollment ? enrollment._id : "none";
-    };
 
 
     /// check this over again to make sure createEnrollment and deleteEnrollment functions are working and corresponding with server post/delete
@@ -111,19 +101,23 @@ export default function Dashboard({ allCourses, myCourses, setMyCourses, course,
                                                 {course.name}</Card.Title>
                                             <Card.Text className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}>
                                                 {course.description}</Card.Text>
-                                                /// unenroll button
-                                            {enrolling && isEnrolled(course._id) && <Button onClick={(e) => {
-                                                e.preventDefault();
-                                                removeEnrollment(getEnrollmentId(currentUser._id, course._id));
-                                            }}
-                                                className="me-2 mb-2">"Unenroll"</Button>}
 
-                                                /// enroll button
-                                            {enrolling && !isEnrolled(course._id) && <Button onClick={(e) => {
-                                                e.preventDefault();
-                                                makeEnrollment({ user: currentUser._id, course: course._id });
-                                            }}
-                                                className="me-2 mb-2">"Unenroll"</Button>}
+                                            {enrolling && (
+                                                <Button
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        if (isEnrolled(course._id)) {
+                                                            removeEnrollment(course._id);
+                                                        } else {
+                                                            makeEnrollment({ user: currentUser._id, course: course._id });
+                                                        }
+                                                    }}
+                                                    className="me-2 mb-2"
+                                                >
+                                                    {isEnrolled(course._id) ? "Unenroll" : "Enroll"}
+                                                </Button>
+                                            )}
+
                                             {currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") && (<>
                                                 <div className="float-end mb-2">
                                                     <Button variant="warning"
