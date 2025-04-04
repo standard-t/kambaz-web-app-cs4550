@@ -10,6 +10,7 @@ import { useLocation } from "react-router";
 import Modules from "./Modules";
 
 
+
 export default function Courses({ courses }: { courses: any[] }) {
     const { cid } = useParams();
     const { pathname } = useLocation();

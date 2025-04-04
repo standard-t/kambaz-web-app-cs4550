@@ -4,7 +4,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 export default function CourseNavigation() {
     const { cid } = useParams();
     const links = [
-        "Home", "Modules", "Assignments", "Piazza", "People", "Grades", "Zoom"];
+        "Home", "Modules", "Assignments", "Quizzes", "People", "Grades", "Zoom"];
     const { pathname } = useLocation();
 
     return (
