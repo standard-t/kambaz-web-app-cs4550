@@ -8,6 +8,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import PeopleTable from "./People/Table";
 import { useLocation } from "react-router";
 import Modules from "./Modules";
+import Quizzes from "./Quizzes";
 
 
 
@@ -30,7 +31,7 @@ export default function Courses({ courses }: { courses: any[] }) {
                         <Route path="Modules" element={<Modules />} />
                         <Route path="Assignments" element={<Assignments />} />
                         <Route path="Assignments/:aid" element={<AssignmentEditor />} />
-                        <Route path="Quizzes" element={<h3>Quizzes</h3>} />
+                        <Route path="Quizzes" element={<Quizzes />} />
                         <Route path="Grades" element={<h3>Grades</h3>} />
                         <Route path="Piazza" element={<h3>Piazza</h3>} />
                         <Route path="Zoom" element={<h3>Zoom</h3>} />

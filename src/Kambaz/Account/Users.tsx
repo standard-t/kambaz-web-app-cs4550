@@ -56,7 +56,7 @@ export default function Users() {
             <h3>Users</h3>
             <button onClick={createUser} className="float-end btn btn-danger wd-add-people">
                 <FaPlus className="me-2" />
-                Users
+                People
             </button>
             <h3>Search:{name}</h3>
             <FormControl onChange={(e) => filterUsersByName(e.target.value)} placeholder="Search people"
