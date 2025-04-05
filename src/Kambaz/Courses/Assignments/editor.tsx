@@ -25,17 +25,23 @@ export default function AssignmentEditor() {
 
 
     const addAssignmentHandler = async () => {
-        const newAssignment = await coursesClient.createAssignmentForCourse(cid!, {
-            title: assignment.title,
-            course: cid,
-            description: assignment.description,
-            points: assignment.points,
-            dueDate: assignment.dueDate,
-            availableFrom: assignment.availableFrom,
-            availableUntil: assignment.availableUntil
+        try {
+            const newAssignment = await coursesClient.createAssignmentForCourse(cid!, {
+                title: assignment.title,
+                course: cid,
+                description: assignment.description,
+                points: assignment.points,
+                dueDate: assignment.dueDate,
+                availableFrom: assignment.availableFrom,
+                availableUntil: assignment.availableUntil
+            });
 
-        });
-        dispatch(addAssignment(newAssignment));
+            console.log("✅ New assignment from server:", newAssignment); // THIS LINE IS IMPORTANT
+            dispatch(addAssignment(newAssignment));
+        } catch (err) {
+            console.error("❌ Error creating assignment:", err);
+            throw err;
+        }
     };
 
     const updateAssignmentHandler = async (assignment: any) => {
@@ -66,15 +72,17 @@ export default function AssignmentEditor() {
         }
     }, [aid, cid, assignments]);
 
-    const save = () => {
+
+    const save = async () => {
         if (aid === 'New') {
-            addAssignmentHandler()
+            await addAssignmentHandler();
         } else {
-            updateAssignmentHandler(assignment)
+            await updateAssignmentHandler(assignment);
         }
-        console.log(assignments);
+        console.log(assignments)
         navigate(`/Kambaz/Courses/${cid}/Assignments`);
-    }
+    };
+
 
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     if (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") {
