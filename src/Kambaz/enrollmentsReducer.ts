@@ -8,8 +8,8 @@ const enrollmentsSlice = createSlice({
     name: "enrollments",
     initialState,
     reducers: {
-        setEnrollments: (state, action) => {
-            state.enrollments = action.payload;
+        setEnrollments: (state, { payload: enrollments }) => {
+            state.enrollments = enrollments;
         },
         addEnrollment: (state, { payload: enrollment }) => {
             state.enrollments = [...state.enrollments,

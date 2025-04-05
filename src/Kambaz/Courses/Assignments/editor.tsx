@@ -23,27 +23,25 @@ export default function AssignmentEditor() {
         dueDate: ""
     });
 
-    const createAssignmentForCourse = async () => {
-        if (!cid) return;
-        const newAssignment = {
+
+    const addAssignmentHandler = async () => {
+        const newAssignment = await coursesClient.createAssignmentForCourse(cid!, {
             title: assignment.title,
+            course: cid,
             description: assignment.description,
             points: assignment.points,
             dueDate: assignment.dueDate,
             availableFrom: assignment.availableFrom,
-            availableUntil: assignment.availableUntil,
-            course: cid
-        };
-        const funcAssignment = await coursesClient.createAssignmentForCourse(cid, newAssignment);
-        dispatch(addAssignment(funcAssignment));
+            availableUntil: assignment.availableUntil
+
+        });
+        dispatch(addAssignment(newAssignment));
     };
 
-    const saveChanges = async (assignment: any) => {
+    const updateAssignmentHandler = async (assignment: any) => {
         await assignmentsClient.updateAssignment(assignment);
         dispatch(updateAssignment(assignment));
     };
-
-
 
 
 
@@ -70,10 +68,11 @@ export default function AssignmentEditor() {
 
     const save = () => {
         if (aid === 'New') {
-            createAssignmentForCourse()
+            addAssignmentHandler()
         } else {
-            saveChanges(assignment)
+            updateAssignmentHandler(assignment)
         }
+        console.log(assignments);
         navigate(`/Kambaz/Courses/${cid}/Assignments`);
     }
 

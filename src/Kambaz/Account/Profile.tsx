@@ -42,7 +42,7 @@ export default function Profile() {
                     type="date" />
                 <FormControl className="mb-2" defaultValue={profile.email} placeholder="email" onChange={
                     (e) => setProfile({ ...profile, email: e.target.value })} />
-                <select onChange={(e) => setProfile({
+                <select defaultValue={profile.role} onChange={(e) => setProfile({
                     ...profile, role: e.target.value
                 })}
                     className="form-control mb-2" id="wd-role">

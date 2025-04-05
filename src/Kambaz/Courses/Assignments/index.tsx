@@ -22,17 +22,25 @@ export default function Assignments() {
     const { cid } = useParams();
     const { assignments } = useSelector((state: any) => state.assignmentsReducer)
     const { currentUser } = useSelector((state: any) => state.accountReducer);
-    const removeAssignment = async (assignmentId: string) => {
+
+
+    const deleteAssignmentHandler = async (assignmentId: string) => {
         await assignmentsClient.deleteAssignment(assignmentId);
         dispatch(deleteAssignment(assignmentId));
     };
-    const fetchAssignments = async () => {
-        const assignments = await coursesClient.findAssignmentsForCourse(cid as string);
-        dispatch(setAssignments(assignments));
+
+
+    const fetchAssignmentsForCourse = async () => {
+        const modules = await coursesClient.findModulesForCourse(cid!);
+        dispatch(setAssignments(modules));
     };
+
+
     useEffect(() => {
-        fetchAssignments();
-    }, []);
+        fetchAssignmentsForCourse();
+    }, [cid]);
+
+
 
 
     return (
@@ -61,7 +69,7 @@ export default function Assignments() {
                         </div>
                     </Link>
                     <DeleteAssignmentPopUp
-                        deleteAssignment={(assignmentId) => removeAssignment(assignmentId)}
+                        deleteAssignment={(assignmentId) => deleteAssignmentHandler(assignmentId)}
                         dialogTitle="Are you sure you want to delete this assignment?"
                         show={show}
                         handleClose={handleClose}

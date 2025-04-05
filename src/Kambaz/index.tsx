@@ -16,41 +16,69 @@ import * as userClient from "./Account/client";
 
 export default function Kambaz() {
 
-    const [allCourses, setAllCourses] = useState<any[]>([]);
-    const [myCourses, setMyCourses] = useState<any[]>([]);
 
 
+    const [courses, setCourses] = useState<any[]>([]);
     const { currentUser } = useSelector((state: any) => state.accountReducer);
 
 
-    const fetchAllCourses = async () => {
-        let courses = [];
-        try {
-            courses = await courseClient.fetchAllCourses();
-        } catch (error) {
-            console.error(error);
-        }
-        setAllCourses(courses);
-    };
-
-
+    const [enrolling, setEnrolling] = useState<boolean>(false);
 
     const fetchMyCourses = async () => {
-        let courses = [];
         try {
-            courses = await userClient.findMyCourses();
+            const courses = await userClient.findMyCourses(currentUser._id);
+            setCourses(courses);
         } catch (error) {
             console.error(error);
         }
-        setMyCourses(courses);
     };
 
+    const fetchAllCourses = async () => {
+        try {
+            const allCourses = await courseClient.fetchAllCourses();
+            const enrolledCourses = await userClient.findMyCourses(
+                currentUser._id
+            );
+            const courses = allCourses.map((course: any) => {
+                if (enrolledCourses.find((c: any) => c._id === course._id)) {
+                    return { ...course, enrolled: true };
+                } else {
+                    return course;
+                }
+            });
+            setCourses(courses);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+
+    const updateEnrollment = async (courseId: string, enrolled: boolean) => {
+        if (enrolled) {
+            await userClient.enrollIntoCourse(currentUser._id, courseId);
+        } else {
+            await userClient.unenrollFromCourse(currentUser._id, courseId);
+        }
+        setCourses(
+            courses.map((course) => {
+                if (course._id === courseId) {
+                    return { ...course, enrolled: enrolled };
+                } else {
+                    return course;
+                }
+            })
+        );
+    };
 
 
     useEffect(() => {
-        fetchAllCourses();
-        fetchMyCourses()
-    }, [currentUser]);
+        if (enrolling) {
+            fetchAllCourses();
+        } else {
+            fetchMyCourses();
+        }
+    }, [currentUser, enrolling]);
+
 
     const [course, setCourse] = useState<any>({
 
@@ -73,29 +101,23 @@ export default function Kambaz() {
 
 
     const addNewCourse = async () => {
-        const newCourse = await userClient.createCourse(course);
-        setAllCourses([...allCourses, newCourse]);
-        setMyCourses([...myCourses, newCourse]);
+        const newCourse = await courseClient.createCourse(course);
+        setCourses([...courses, newCourse]);
     };
 
     const deleteCourse = async (courseId: string) => {
         await courseClient.deleteCourse(courseId);
-        setAllCourses(allCourses.filter((course) => course._id !== courseId));
-        setMyCourses(myCourses.filter((course) => course._id !== courseId));
+        setCourses(courses.filter((course) => course._id !== courseId));
     };
 
     const updateCourse = async () => {
         await courseClient.updateCourse(course);
-        setAllCourses(allCourses.map((c) => {
+        setCourses(courses.map((c) => {
             if (c._id === course._id) { return course; }
             else { return c; }
         })
         );
-        setMyCourses(myCourses.map((c) => {
-            if (c._id === course._id) { return course; }
-            else { return c; }
-        })
-        );
+
     };
 
 
@@ -117,8 +139,8 @@ export default function Kambaz() {
                     <Routes>
                         <Route path="/" element={<Navigate to="Dashboard" />} />
                         <Route path="Account/*" element={<Account />} />
-                        <Route path="Dashboard" element={<ProtectedRoute><Dashboard setMyCourses={setMyCourses} allCourses={allCourses} myCourses={myCourses} course={course} setCourse={setCourse} addNewCourse={addNewCourse} deleteCourse={deleteCourse} updateCourse={updateCourse} /></ProtectedRoute>} />
-                        <Route path="Courses/:cid/*" element={<ProtectedRoute><Courses courses={allCourses} /></ProtectedRoute>} />
+                        <Route path="Dashboard" element={<ProtectedRoute><Dashboard updateEnrollment={updateEnrollment} setEnrolling={setEnrolling} enrolling={enrolling} courses={courses} setCourses={setCourses} course={course} setCourse={setCourse} addNewCourse={addNewCourse} deleteCourse={deleteCourse} updateCourse={updateCourse} /></ProtectedRoute>} />
+                        <Route path="Courses/:cid/*" element={<ProtectedRoute><Courses courses={courses} /></ProtectedRoute>} />
                         <Route path="Labs/*" element={<Labs />} />
                         <Route path="Inbox" element={<h1>Inbox</h1>} />
                         <Route path="Calendar" element={<h1>Calendar</h1>} />

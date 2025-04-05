@@ -3,7 +3,9 @@ import PeopleDetails from "./Details";
 import { Table } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+
 export default function PeopleTable({ users = [] }: { users?: any[] }) {
+
     return (
         <div id="wd-people-table">
             <PeopleDetails />

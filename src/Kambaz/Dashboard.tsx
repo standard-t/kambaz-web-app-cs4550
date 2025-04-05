@@ -2,25 +2,25 @@
 import { Row, Col, Card, Button, FormControl } from "react-bootstrap";
 import { addEnrollment, setEnrollments } from "./enrollmentsReducer";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as coursesClient from "./Courses/client";
-import * as accountClient from "./Account/client";
+import * as userClient from "./Account/client";
 
 
-export default function Dashboard({ allCourses, myCourses, setMyCourses, course, setCourse, addNewCourse, deleteCourse, updateCourse }: { allCourses: any[], myCourses: any[], course: any; setMyCourses: (course: any) => void; setCourse: (course: any) => void; addNewCourse: () => void; deleteCourse: (course: any) => void; updateCourse: () => void; }
+export default function Dashboard({ courses, setCourses, course, setCourse, addNewCourse, deleteCourse, updateCourse, enrolling, setEnrolling, updateEnrollment }: { courses: any[], setCourses: (course: any) => void; course: any; setCourse: (course: any) => void; addNewCourse: () => void; deleteCourse: (course: any) => void; updateCourse: () => void; enrolling: boolean; setEnrolling: (enrolling: boolean) => void; updateEnrollment: (courseId: string, enrolled: boolean) => void; }
 ) {
 
 
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const dispatch = useDispatch();
-    const [enrolling, setEnrolling] = useState(false);
+
 
 
     const fetchEnrollments = async () => {
         let enrollments = [];
         try {
-            enrollments = await accountClient.findEnrollments();
+            enrollments = await userClient.findEnrollments();
         } catch (error) {
             console.error(error);
         }
@@ -32,35 +32,8 @@ export default function Dashboard({ allCourses, myCourses, setMyCourses, course,
     };
 
 
-    const filteredCourses = enrolling ? allCourses : myCourses;
-
-    const isEnrolled = (courseId: any) => {
-        return myCourses.some(
-            (course: any) =>
-                course._id === courseId
-        );
-    };
 
 
-    const removeEnrollment = async (courseId: string) => {
-        await coursesClient.deleteEnrollment(currentUser._id, courseId);
-        const updatedCourses = await accountClient.findMyCourses();
-        setMyCourses(updatedCourses);
-    }
-
-    const makeEnrollment = async (enrollment: any) => {
-        await coursesClient.createEnrollment(enrollment);
-        const updatedCourses = await accountClient.findMyCourses();
-        setMyCourses(updatedCourses);
-        dispatch(addEnrollment(enrollment));
-    }
-
-
-
-    /// check this over again to make sure createEnrollment and deleteEnrollment functions are working and corresponding with server post/delete
-    /// next steps: implement make enrollment and remove enrollment integrating into enroll/unenroll buttons on cards 
-    /// can retrieve enrollment id for removeEnrollment using getEnrollmentId 
-    /// can create a unique instance of an enrollment using currentUser, courseId, and unique id to feed into make enrollment 
 
 
     useEffect(() => {
@@ -79,14 +52,14 @@ export default function Dashboard({ allCourses, myCourses, setMyCourses, course,
                 <FormControl className="mb-4" onChange={(e) => { setCourse({ ...course, description: e.target.value }) }} value={course.description} />
             </>)}
             <div className="d-flex">
-                <h2 id="wd-dashboard-published">Published Courses ({filteredCourses.length})</h2>
+                <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2>
                 <Button className="ms-5" onClick={() => { toggleEnrolling() }}>{enrolling ? "My Courses" : "Enrollments"}</Button>
             </div>
             <hr />
             <div id="wd-dashboard-courses">
                 <div className="wd-dashboard-course">
                     <Row xs={1} md={5} className="g-4">
-                        {filteredCourses
+                        {courses
                             .map((course: any) => (<Col className="wd-dashboard-course"
                                 style={{ width: "300px" }}>
                                 <Card>
@@ -103,17 +76,13 @@ export default function Dashboard({ allCourses, myCourses, setMyCourses, course,
 
                                             {enrolling && (
                                                 <Button
-                                                    onClick={(e) => {
-                                                        e.preventDefault();
-                                                        if (isEnrolled(course._id)) {
-                                                            removeEnrollment(course._id);
-                                                        } else {
-                                                            makeEnrollment({ user: currentUser._id, course: course._id });
-                                                        }
+                                                    onClick={(event) => {
+                                                        event.preventDefault();
+                                                        updateEnrollment(course._id, !course.enrolled);
                                                     }}
                                                     className="me-2 mb-2"
                                                 >
-                                                    {isEnrolled(course._id) ? "Unenroll" : "Enroll"}
+                                                    {course.enrolled ? "Unenroll" : "Enroll"}
                                                 </Button>
                                             )}
 
