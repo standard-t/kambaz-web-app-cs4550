@@ -35,11 +35,9 @@ export default function AssignmentEditor() {
                 availableFrom: assignment.availableFrom,
                 availableUntil: assignment.availableUntil
             });
-
-            console.log("✅ New assignment from server:", newAssignment); // THIS LINE IS IMPORTANT
             dispatch(addAssignment(newAssignment));
         } catch (err) {
-            console.error("❌ Error creating assignment:", err);
+            console.error("Error creating assignment:", err);
             throw err;
         }
     };

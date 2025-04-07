@@ -10,6 +10,7 @@ import { useLocation } from "react-router";
 import Modules from "./Modules";
 import Quizzes from "./Quizzes";
 import PeopleForCourse from "./PeopleForCourse";
+import QuizDetails from "./Quizzes/details";
 
 
 
@@ -35,6 +36,7 @@ export default function Courses({ courses }: { courses: any[] }) {
                         <Route path="Assignments" element={<Assignments />} />
                         <Route path="Assignments/:aid" element={<AssignmentEditor />} />
                         <Route path="Quizzes" element={<Quizzes />} />
+                        <Route path="Quizzes/:qid" element={<QuizDetails />} />
                         <Route path="Grades" element={<h3>Grades</h3>} />
                         <Route path="Piazza" element={<h3>Piazza</h3>} />
                         <Route path="Zoom" element={<h3>Zoom</h3>} />

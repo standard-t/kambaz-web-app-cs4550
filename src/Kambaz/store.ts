@@ -10,6 +10,8 @@ import coursesReducer
     from "./Courses/coursesReducer";
 import enrollmentsReducer
     from "./enrollmentsReducer";
+import quizzesReducer
+    from "./Courses/Quizzes/reducer";
 
 
 const store = configureStore({
@@ -18,7 +20,8 @@ const store = configureStore({
         accountReducer,
         assignmentsReducer,
         coursesReducer,
-        enrollmentsReducer
+        enrollmentsReducer,
+        quizzesReducer
     },
 });
 export default store;
