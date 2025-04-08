@@ -4,15 +4,14 @@ import { BsGripVertical } from "react-icons/bs";
 import { LuClipboardPen } from "react-icons/lu";
 import { FaCheckCircle } from "react-icons/fa";
 import { MdOutlineDoNotDisturb } from "react-icons/md";
-import { FaTrash } from "react-icons/fa";
-import { IoEllipsisVertical } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ListGroup } from "react-bootstrap";
-import { deleteQuiz, setQuizzes } from "./reducer";
+import { deleteQuiz, setQuizzes, updateQuiz } from "./reducer";
 import * as coursesClient from "../client";
 import * as quizzesClient from "./client";
 import { useEffect, useState } from "react";
 import DeleteQuizPopUp from "./DeleteQuizPopup";
+import QuizActions from "./contextMenu";
 
 
 
@@ -20,11 +19,17 @@ export default function Quizzes() {
 
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const { cid } = useParams();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { quizzes } = useSelector((state: any) => state.quizzesReducer)
+
+    const { quizzes } = useSelector((state: any) => state.quizzesReducer);
+    const filteredQuizzes = currentUser?.role === "STUDENT"
+        ? quizzes.filter((quiz: any) => quiz.published)
+        : quizzes;
 
     const [show, setShow] = useState(false);
     const [selectedQuizId, setSelectedQuizId] = useState("");
+
 
     const handleShow = (quizId: string) => {
         setSelectedQuizId(quizId);
@@ -46,6 +51,53 @@ export default function Quizzes() {
         dispatch(deleteQuiz(quizId));
     };
 
+    const updateQuizHandler = async (quiz: any) => {
+        await quizzesClient.updateQuiz(quiz);
+        dispatch(updateQuiz(quiz));
+    };
+
+    const togglePublishHandler = async (quiz: any) => {
+        const updatedQuiz = { ...quiz, published: !quiz.published };
+        await updateQuizHandler(updatedQuiz);
+    };
+
+    const formatDate = (dateString: string) => {
+        if (!dateString) return "Invalid Date";
+
+        const parts = dateString.split("-");
+        if (parts.length !== 3) return "Invalid Date";
+
+        const [yearStr, monthStr, dayStr] = parts;
+        const year = parseInt(yearStr, 10);
+        const month = parseInt(monthStr, 10);
+        const day = parseInt(dayStr, 10);
+
+        if (isNaN(year) || isNaN(month) || isNaN(day)) return "Invalid Date";
+
+        const localDate = new Date(year, month - 1, day);
+
+        return localDate.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+        });
+    };
+
+    const getAvailability = (availableFrom: string, availableUntil: string): string => {
+        const now = new Date();
+        const fromDate = new Date(availableFrom);
+        const untilDate = new Date(availableUntil);
+
+        if (now > untilDate) {
+            return "Closed";
+        } else if (now < fromDate) {
+            return `Not Available Until ${formatDate(availableFrom)}`;
+        } else {
+            return "Available";
+        }
+    };
+
+
     useEffect(() => {
         fetchQuizzesForCourse();
     }, [cid]);
@@ -63,32 +115,39 @@ export default function Quizzes() {
             }
             <ListGroup id="wd-quiz-list">
 
-                {quizzes.map((quiz: any) => (<ListGroup.Item key={quiz._id} className="wd-lesson p-3 ps-1">
+                {filteredQuizzes.map((quiz: any) => (<ListGroup.Item key={quiz._id} className="wd-lesson p-3 ps-1">
                     <BsGripVertical className=" me-2 fs-2" />
                     <LuClipboardPen className="text-success fs-4 me-2" />
                     <div className="float-end">
                         {currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") && (<>
-                            {quiz.published ? <FaCheckCircle className="text-success me-2" /> : <MdOutlineDoNotDisturb className="me-2" />}
-                            <FaTrash className="text-danger me-2 delete-btn" onClick={(e) => {
-                                e.preventDefault();
-                                handleShow(quiz._id);
-
-                            }} />
+                            {quiz.published ? (
+                                <FaCheckCircle
+                                    className="text-success me-2"
+                                    onClick={() => togglePublishHandler(quiz)}
+                                />
+                            ) : (
+                                <MdOutlineDoNotDisturb
+                                    className="me-2"
+                                    onClick={() => togglePublishHandler(quiz)}
+                                />
+                            )}
+                            <QuizActions
+                                onPublish={() => togglePublishHandler(quiz)}
+                                onEdit={() => navigate(`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`)}
+                                onDelete={() => handleShow(quiz._id)}
+                                quiz={quiz}
+                            />
                         </>)}
-                        <IoEllipsisVertical className="fs-4" />
                     </div>
                     <Link to={`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`} className="text-black text-decoration-none">
                         {quiz.title}<br />
                         <div className="wd-assignment-offset">
-                            <p><strong>Due: </strong>{new Date(quiz.dueDate).toLocaleDateString('en-US', {
-                                timeZone: 'UTC',
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric'
-                            })} <strong>Points: </strong>{quiz.points}
-                                <br />{quiz.description}</p>
-
-
+                            <p>
+                                <strong>Due: </strong>{formatDate(quiz.dueDate)}
+                                <strong> Availability: </strong> {getAvailability(quiz.availableFrom, quiz.availableUntil)}
+                                <strong> Points: </strong>{quiz.points}
+                                <br />{quiz.description}
+                            </p>
                         </div>
                     </Link>
                     <DeleteQuizPopUp

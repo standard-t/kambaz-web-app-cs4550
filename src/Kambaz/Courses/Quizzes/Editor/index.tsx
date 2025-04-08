@@ -84,13 +84,27 @@ export default function QuizEditor() {
     const save = async () => {
         if (qid === 'New') {
             await addQuizHandler();
+            navigate(`/Kambaz/Courses/${cid}/Quizzes`);
         } else {
             await updateQuizHandler(quiz);
+            navigate(`/Kambaz/Courses/${cid}/Quizzes/${qid}`);
+        }
+        console.log(quizzes)
+    };
+
+    const saveAndPublish = async () => {
+        const updatedQuiz = { ...quiz, published: true }; // create updated copy
+        setQuiz(updatedQuiz); // optional, updates UI
+        if (qid === 'New') {
+            await coursesClient.createQuizForCourse(cid!, updatedQuiz); // use updatedQuiz here too
+            dispatch(addQuiz(updatedQuiz));
+        } else {
+            await updateQuizHandler(updatedQuiz); // send updated quiz with published: true
         }
         navigate(`/Kambaz/Courses/${cid}/Quizzes`);
-        console.log(quizzes)
-
     };
+
+
 
     useEffect(() => {
         if (qid === 'New') {
@@ -159,17 +173,25 @@ export default function QuizEditor() {
                 <div>
                     <div className="form-group d-flex justify-content-end">
                         <Link id="wd-cancel-btn"
-                            to={`/Kambaz/Courses/${cid}/Quizzes/${qid}`}
+                            to={`/Kambaz/Courses/${cid}/Quizzes`}
                             className="btn bg-light w-100 mb-2 me-2">
                             Cancel</Link>
                     </div>
                 </div>
                 <div>
                     <div className="form-group d-flex justify-content-end">
-                        <Button id="wd-cancel-btn"
-                            className="btn bg-danger text-white w-100 mb-2 me-3"
+                        <Button id="wd-save-btn"
+                            className="btn text-white w-100 mb-2 me-2"
                             onClick={save}>
                             Save</Button>
+                    </div>
+                </div>
+                <div>
+                    <div className="form-group d-flex justify-content-end">
+                        <Button id="wd-saveandpublish-btn"
+                            className="btn-danger text-white w-100 mb-2 me-3"
+                            onClick={saveAndPublish}>
+                            Save and Publish</Button>
                     </div>
                 </div>
             </div>

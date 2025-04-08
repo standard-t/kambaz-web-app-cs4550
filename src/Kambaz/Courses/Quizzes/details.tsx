@@ -1,10 +1,13 @@
 import { Button } from "react-bootstrap";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { IoArrowBackSharp } from "react-icons/io5";
+
 
 export default function QuizDetails() {
     const { qid, cid } = useParams();
+    const navigate = useNavigate();
     const { quizzes } = useSelector((state: any) => state.quizzesReducer);
     const { currentUser } = useSelector((state: any) => state.accountReducer);
 
@@ -44,7 +47,7 @@ export default function QuizDetails() {
     return (
         <div>
             <div className="d-flex justify-content-between align-items-center">
-                <h3 className="me-3">{quiz?.title}</h3>
+                <div className="d-flex"> <IoArrowBackSharp className="fs-2 me-3" onClick={() => navigate(`/Kambaz/Courses/${cid}/Quizzes`)} /><h3 className="me-3">{quiz?.title}</h3></div>
                 {(currentUser.role === "FACULTY" || currentUser.role === "ADMIN") && (
                     <>
                         <div>
