@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { BsGripVertical } from "react-icons/bs";
 import { LuClipboardPen } from "react-icons/lu";
 import { FaCheckCircle } from "react-icons/fa";
+import { MdOutlineDoNotDisturb } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { Link } from "react-router-dom";
@@ -23,8 +24,17 @@ export default function Quizzes() {
     const { quizzes } = useSelector((state: any) => state.quizzesReducer)
 
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [selectedQuizId, setSelectedQuizId] = useState("");
+
+    const handleShow = (quizId: string) => {
+        setSelectedQuizId(quizId);
+        setShow(true);
+    };
+
+    const handleClose = () => {
+        setSelectedQuizId("");
+        setShow(false);
+    };
 
     const fetchQuizzesForCourse = async () => {
         const quizzes = await coursesClient.findQuizzesForCourse(cid!);
@@ -35,8 +45,6 @@ export default function Quizzes() {
         await quizzesClient.deleteQuiz(quizId);
         dispatch(deleteQuiz(quizId));
     };
-
-
 
     useEffect(() => {
         fetchQuizzesForCourse();
@@ -49,21 +57,21 @@ export default function Quizzes() {
             {
                 currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") && (<>
                     <div className="d-flex justify-content-end">
-                        <Link className="btn bg-danger text-white mb-2 me-3" to={`/Kambaz/Courses/${cid}/Quizzes/New`} >+ Quiz</Link>
+                        <Link className="btn bg-danger text-white mb-2 me-3" to={`/Kambaz/Courses/${cid}/Quizzes/New/editor`} >+ Quiz</Link>
                     </div>
                 </>)
             }
             <ListGroup id="wd-quiz-list">
 
-                {quizzes.map((quiz: any) => (<ListGroup.Item className="wd-lesson p-3 ps-1">
+                {quizzes.map((quiz: any) => (<ListGroup.Item key={quiz._id} className="wd-lesson p-3 ps-1">
                     <BsGripVertical className=" me-2 fs-2" />
                     <LuClipboardPen className="text-success fs-4 me-2" />
                     <div className="float-end">
                         {currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") && (<>
-                            <FaCheckCircle className="text-success me-2" />
+                            {quiz.published ? <FaCheckCircle className="text-success me-2" /> : <MdOutlineDoNotDisturb className="me-2" />}
                             <FaTrash className="text-danger me-2 delete-btn" onClick={(e) => {
                                 e.preventDefault();
-                                handleShow();
+                                handleShow(quiz._id);
 
                             }} />
                         </>)}
@@ -88,7 +96,7 @@ export default function Quizzes() {
                         dialogTitle="Are you sure you want to delete this quiz?"
                         show={show}
                         handleClose={handleClose}
-                        quizId={quiz._id}
+                        quizId={selectedQuizId}
                     />
                 </ListGroup.Item>))}
             </ListGroup>

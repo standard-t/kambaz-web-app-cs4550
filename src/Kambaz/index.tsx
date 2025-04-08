@@ -125,7 +125,8 @@ export default function Kambaz() {
 
 
 
-
+    /// need state variable to store current quiz, but needs to be able to be passed into routes at kambaz index.tsx so cant be state variable on 
+    // look at quiz editor and kambaz index
 
 
 

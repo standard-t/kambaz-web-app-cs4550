@@ -19,7 +19,14 @@ export default function DeleteQuizPopUp({ deleteQuiz, show,
                 <Modal.Footer>
                     <Button variant="secondary"
                         onClick={handleClose}>Cancel</Button>
-                    <Button variant="primary" onClick={() => { deleteQuiz(quizId); handleClose(); }}>Confirm</Button>
+                    <Button variant="primary"
+                        onClick={() => {
+                            if (quizId) {
+                                deleteQuiz(quizId);
+                            }
+                            handleClose();
+                        }}>Confirm</Button>
                 </Modal.Footer>
             </Modal></div >);
 }
+

@@ -1,5 +1,5 @@
 import { Button } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -10,6 +10,7 @@ export default function QuizDetails() {
 
     const [quiz, setQuiz] = useState({
         _id: Math.random().toString(),
+        creator: currentUser._id,
         course: cid,
         title: "New Quiz",
         description: "New Quiz Description",
@@ -26,45 +27,20 @@ export default function QuizDetails() {
         webcam: false,
         lockQuestions: false,
         dueDate: "2025-04-05",
-        published: true,
+        published: false,
         availableFrom: "2025-04-01",
         availableUntil: "2025-04-15",
         score: 0
     });
 
     useEffect(() => {
-        if (qid === 'New') {
-            // For new assignment, generate a temporary unique ID
-            setQuiz({
-                _id: Math.random().toString(),
-                course: cid,
-                title: "New Quiz",
-                description: "New Quiz Description",
-                quizType: "Graded quiz",
-                points: 0,
-                assignmentGroup: "Quizzes",
-                shuffleAnswers: true,
-                timeLimit: 20,
-                multipleAttempts: false,
-                numberOfAttempts: 1,
-                showCorrectAnswers: false,
-                accessCode: "",
-                oneAtATime: true,
-                webcam: false,
-                lockQuestions: false,
-                dueDate: "2025-04-05",
-                published: true,
-                availableFrom: "2025-04-01",
-                availableUntil: "2025-04-15",
-                score: 0
-            });
-        } else {
-            const q = quizzes.find((q: any) => q._id === qid);
-            if (q) {
-                setQuiz(q);
-            }
+        const q = quizzes.find((q: any) => q._id === qid);
+        if (q) {
+            setQuiz(q);
         }
     }, [qid, cid, quizzes]);
+
+
     return (
         <div>
             <div className="d-flex justify-content-between align-items-center">
@@ -72,7 +48,7 @@ export default function QuizDetails() {
                 {(currentUser.role === "FACULTY" || currentUser.role === "ADMIN") && (
                     <>
                         <div>
-                            <Button className="btn-warning text-black me-2">Edit</Button>
+                            <Link className="btn bg-warning text-black me-2" to={`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}/editor`} >Edit</Link>
                             <Button className="btn-primary text-white me-5">Preview</Button>
                         </div>
                     </>
