@@ -1,5 +1,5 @@
-import { Button, Form, ListGroup } from "react-bootstrap";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Form } from "react-bootstrap";
+
 
 export default function DetailsEditor({ quiz, setQuiz }: { quiz: any; setQuiz: (quiz: any) => void; }) {
     return (

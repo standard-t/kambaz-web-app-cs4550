@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import DetailsEditor from "./detailsEditor";
-import QuestionsEditor from "./questionsEditor";
+import QuestionsEditor from "../Questions/questionsEditor";
 import { addQuiz, updateQuiz } from "../reducer";
 import * as coursesClient from "../../client";
 import * as quizzesClient from "../client";
@@ -165,7 +165,7 @@ export default function QuizEditor() {
                 )}
                 {(editorComponent === "Questions") && (
                     <>
-                        <QuestionsEditor quiz={quiz} setQuiz={setQuiz} />
+                        <QuestionsEditor />
                     </>
                 )}
             </div>

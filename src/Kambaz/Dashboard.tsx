@@ -1,14 +1,13 @@
 
 import { Row, Col, Card, Button, FormControl } from "react-bootstrap";
-import { addEnrollment, setEnrollments } from "./enrollmentsReducer";
+import { setEnrollments } from "./enrollmentsReducer";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as coursesClient from "./Courses/client";
 import * as userClient from "./Account/client";
 
 
-export default function Dashboard({ courses, setCourses, course, setCourse, addNewCourse, deleteCourse, updateCourse, enrolling, setEnrolling, updateEnrollment }: { courses: any[], setCourses: (course: any) => void; course: any; setCourse: (course: any) => void; addNewCourse: () => void; deleteCourse: (course: any) => void; updateCourse: () => void; enrolling: boolean; setEnrolling: (enrolling: boolean) => void; updateEnrollment: (courseId: string, enrolled: boolean) => void; }
+export default function Dashboard({ courses, course, setCourse, addNewCourse, deleteCourse, updateCourse, enrolling, setEnrolling, updateEnrollment }: { courses: any[], course: any; setCourse: (course: any) => void; addNewCourse: () => void; deleteCourse: (course: any) => void; updateCourse: () => void; enrolling: boolean; setEnrolling: (enrolling: boolean) => void; updateEnrollment: (courseId: string, enrolled: boolean) => void; }
 ) {
 
 

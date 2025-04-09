@@ -1,0 +1,43 @@
+[
+  {
+    "_id": "quiz1-q1",
+    "quiz": "example-quiz1",
+    "title": "Addition Question",
+    "question": "What is 150 + 350?",
+    "questionType": "Fill in the blank",
+    "points": 10,
+    "choices": [],
+    "correctAnswer": "500",
+    "editing": false
+  },
+  {
+    "_id": "quiz1-q2",
+    "quiz": "example-quiz1",
+    "title": "Biology Question",
+    "question": "True or false, all living organisms are made of cells?",
+    "questionType": "True or false",
+    "points": 5,
+    "choices": [
+      "True",
+      "False"
+    ],
+    "correctAnswer": "True",
+    "editing": false
+  },
+  {
+    "_id": "quiz1-q3",
+    "quiz": "example-quiz1",
+    "title": "Geography Question",
+    "question": "Rome is the capital of which country?",
+    "questionType": "Multiple choice",
+    "points": 15,
+    "choices": [
+      "Spain",
+      "Italy",
+      "Germany",
+      "France"
+    ],
+    "correctAnswer": "Italy",
+    "editing": false
+  }
+]

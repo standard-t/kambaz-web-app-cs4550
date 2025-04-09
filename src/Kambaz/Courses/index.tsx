@@ -1,11 +1,9 @@
 import { Navigate, Route, Routes, useParams } from "react-router";
 import Home from "./Home";
-import * as coursesClient from "./client";
 import CoursesNavigation from "./Navigation";
 import AssignmentEditor from "./Assignments/editor";
 import Assignments from "./Assignments";
 import { RxHamburgerMenu } from "react-icons/rx";
-import PeopleTable from "./People/Table";
 import { useLocation } from "react-router";
 import Modules from "./Modules";
 import Quizzes from "./Quizzes";

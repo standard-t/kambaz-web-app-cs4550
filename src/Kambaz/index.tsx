@@ -140,7 +140,7 @@ export default function Kambaz() {
                     <Routes>
                         <Route path="/" element={<Navigate to="Dashboard" />} />
                         <Route path="Account/*" element={<Account />} />
-                        <Route path="Dashboard" element={<ProtectedRoute><Dashboard updateEnrollment={updateEnrollment} setEnrolling={setEnrolling} enrolling={enrolling} courses={courses} setCourses={setCourses} course={course} setCourse={setCourse} addNewCourse={addNewCourse} deleteCourse={deleteCourse} updateCourse={updateCourse} /></ProtectedRoute>} />
+                        <Route path="Dashboard" element={<ProtectedRoute><Dashboard updateEnrollment={updateEnrollment} setEnrolling={setEnrolling} enrolling={enrolling} courses={courses} course={course} setCourse={setCourse} addNewCourse={addNewCourse} deleteCourse={deleteCourse} updateCourse={updateCourse} /></ProtectedRoute>} />
                         <Route path="Courses/:cid/*" element={<ProtectedRoute><Courses courses={courses} /></ProtectedRoute>} />
                         <Route path="Labs/*" element={<Labs />} />
                         <Route path="Inbox" element={<h1>Inbox</h1>} />
