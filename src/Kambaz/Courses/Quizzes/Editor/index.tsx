@@ -5,8 +5,11 @@ import { useSelector, useDispatch } from "react-redux";
 import DetailsEditor from "./detailsEditor";
 import QuestionsEditor from "../Questions/questionsEditor";
 import { addQuiz, updateQuiz } from "../reducer";
+import { setQuestions } from "../Questions/reducer";
 import * as coursesClient from "../../client";
 import * as quizzesClient from "../client";
+
+
 
 export default function QuizEditor() {
     const { qid, cid } = useParams();
@@ -15,6 +18,9 @@ export default function QuizEditor() {
     const { quizzes } = useSelector((state: any) => state.quizzesReducer);
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const [editorComponent, setEditorComponent] = useState("Details");
+
+
+
     const [quiz, setQuiz] = useState({
         _id: Math.random().toString(),
         creator: currentUser._id,
@@ -165,11 +171,12 @@ export default function QuizEditor() {
                 )}
                 {(editorComponent === "Questions") && (
                     <>
+
                         <QuestionsEditor />
                     </>
                 )}
             </div>
-            <div className="d-flex justify-content-end mb-5">
+            <div className="d-flex mb-5" style={{ marginLeft: '29%' }}>
                 <div>
                     <div className="form-group d-flex justify-content-end">
                         <Link id="wd-cancel-btn"
