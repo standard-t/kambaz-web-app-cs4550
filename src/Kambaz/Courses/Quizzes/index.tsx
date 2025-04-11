@@ -5,13 +5,14 @@ import { LuClipboardPen } from "react-icons/lu";
 import { FaCheckCircle } from "react-icons/fa";
 import { MdOutlineDoNotDisturb } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
-import { ListGroup } from "react-bootstrap";
+import { Button, ListGroup } from "react-bootstrap";
 import { deleteQuiz, setQuizzes, updateQuiz } from "./reducer";
 import * as coursesClient from "../client";
 import * as quizzesClient from "./client";
 import { useEffect, useState } from "react";
 import DeleteQuizPopUp from "./DeleteQuizPopup";
 import QuizActions from "./contextMenu";
+import { v4 as uuidv4 } from "uuid";
 
 
 
@@ -22,7 +23,7 @@ export default function Quizzes() {
     const { cid } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    const { questions } = useSelector((state: any) => state.questionsReducer);
     const { quizzes } = useSelector((state: any) => state.quizzesReducer);
     const filteredQuizzes = currentUser?.role === "STUDENT"
         ? quizzes.filter((quiz: any) => quiz.published)
@@ -110,55 +111,64 @@ export default function Quizzes() {
             {
                 currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") && (<>
                     <div className="d-flex justify-content-end">
-                        <Link className="btn bg-danger text-white mb-2 me-3" to={`/Kambaz/Courses/${cid}/Quizzes/New/editor`} >+ Quiz</Link>
+                        <Button
+                            className="btn-danger text-white mb-2 me-3"
+                            onClick={() => {
+                                const newQuizId = uuidv4();
+                                navigate(`/Kambaz/Courses/${cid}/Quizzes/${newQuizId}/editor`);
+                            }}>
+                            + Quiz
+                        </Button>
                     </div>
                 </>)
             }
             <ListGroup id="wd-quiz-list">
 
-                {filteredQuizzes.map((quiz: any) => (<ListGroup.Item key={quiz._id} className="wd-lesson p-3 ps-1">
-                    <BsGripVertical className=" me-2 fs-2" />
-                    <LuClipboardPen className="text-success fs-4 me-2" />
-                    <div className="float-end">
-                        {currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") && (<>
-                            {quiz.published ? (
-                                <FaCheckCircle
-                                    className="text-success me-2"
-                                    onClick={() => togglePublishHandler(quiz)}
+                {filteredQuizzes.map((quiz: any) => (
+                    <ListGroup.Item key={quiz._id} className="wd-lesson p-3 ps-1">
+                        <BsGripVertical className=" me-2 fs-2" />
+                        <LuClipboardPen className="text-success fs-4 me-2" />
+                        <div className="float-end">
+                            {currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") && (<>
+                                {quiz.published ? (
+                                    <FaCheckCircle
+                                        className="text-success me-2"
+                                        onClick={() => togglePublishHandler(quiz)}
+                                    />
+                                ) : (
+                                    <MdOutlineDoNotDisturb
+                                        className="me-2"
+                                        onClick={() => togglePublishHandler(quiz)}
+                                    />
+                                )}
+                                <QuizActions
+                                    onPublish={() => togglePublishHandler(quiz)}
+                                    onEdit={() => navigate(`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`)}
+                                    onDelete={() => handleShow(quiz._id)}
+                                    quiz={quiz}
                                 />
-                            ) : (
-                                <MdOutlineDoNotDisturb
-                                    className="me-2"
-                                    onClick={() => togglePublishHandler(quiz)}
-                                />
-                            )}
-                            <QuizActions
-                                onPublish={() => togglePublishHandler(quiz)}
-                                onEdit={() => navigate(`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`)}
-                                onDelete={() => handleShow(quiz._id)}
-                                quiz={quiz}
-                            />
-                        </>)}
-                    </div>
-                    <Link to={`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`} className="text-black text-decoration-none">
-                        {quiz.title}<br />
-                        <div className="wd-assignment-offset">
-                            <p>
-                                <strong>Due: </strong>{formatDate(quiz.dueDate)}
-                                <strong> Availability: </strong> {getAvailability(quiz.availableFrom, quiz.availableUntil)}
-                                <strong> Points: </strong>{quiz.points}
-                                <br />{quiz.description}
-                            </p>
+                            </>)}
                         </div>
-                    </Link>
-                    <DeleteQuizPopUp
-                        deleteQuiz={(quizId) => deleteQuizHandler(quizId)}
-                        dialogTitle="Are you sure you want to delete this quiz?"
-                        show={show}
-                        handleClose={handleClose}
-                        quizId={selectedQuizId}
-                    />
-                </ListGroup.Item>))}
+                        <Link to={`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`} className="text-black text-decoration-none">
+                            {quiz.title}<br />
+                            <div className="wd-assignment-offset">
+                                <p>
+                                    <strong>Due: </strong>{formatDate(quiz.dueDate)}
+                                    <strong> Availability: </strong> {getAvailability(quiz.availableFrom, quiz.availableUntil)}
+                                    <strong> Points: </strong>{quiz.points}
+                                    <strong> Questions: </strong> {quiz.numberOfQuestions}
+                                    <br />{quiz.description}
+                                </p>
+                            </div>
+                        </Link>
+                        <DeleteQuizPopUp
+                            deleteQuiz={(quizId) => deleteQuizHandler(quizId)}
+                            dialogTitle="Are you sure you want to delete this quiz?"
+                            show={show}
+                            handleClose={handleClose}
+                            quizId={selectedQuizId}
+                        />
+                    </ListGroup.Item>))}
             </ListGroup>
         </div>
 

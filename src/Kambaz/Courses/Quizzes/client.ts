@@ -12,7 +12,7 @@ export const updateQuiz = async (quiz: any) => {
     const { data } = await axiosWithCredentials.put(`${QUIZZES_API}/${quiz._id}`, quiz);
     return data;
 };
-export const createQuestionsForQuiz = async (quizId: string, question: any) => {
+export const createQuestionForQuiz = async (quizId: string, question: any) => {
     const response = await axiosWithCredentials.post(
         `${QUIZZES_API}/${quizId}/questions`,
         question
@@ -21,5 +21,18 @@ export const createQuestionsForQuiz = async (quizId: string, question: any) => {
 };
 export const findQuestionsForQuiz = async (quizId: string) => {
     const response = await axiosWithCredentials.get(`${QUIZZES_API}/${quizId}/questions`);
+    return response.data;
+};
+
+export const createAttemptForQuiz = async (quizId: string, attempt: any) => {
+    const response = await axiosWithCredentials.post(
+        `${QUIZZES_API}/${quizId}/attempts`,
+        attempt
+    );
+    return response.data;
+};
+
+export const findAttemptsForQuiz = async (quizId: string) => {
+    const response = await axiosWithCredentials.get(`${QUIZZES_API}/${quizId}/attempts`);
     return response.data;
 };

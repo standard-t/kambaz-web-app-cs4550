@@ -3,11 +3,12 @@ import { FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 // import { useNavigate } from "react-router-dom";
-import { setQuestions } from "./reducer"; // delete update and add need to be imported as well 
+import { setQuestions, deleteQuestion, updateQuestion, editQuestion, addQuestion } from "./reducer"; // delete update and add need to be imported as well 
 import * as quizzesClient from "../client";
-//import * as questionsClient from "./client";
+import * as questionsClient from "./client";
 import { useEffect } from "react";
 import { FaPencil } from "react-icons/fa6";
+import QuestionCard from "./questionCard";
 
 
 
@@ -15,18 +16,30 @@ export default function QuestionsEditor() {
     const { qid } = useParams();
     const dispatch = useDispatch();
     const { questions } = useSelector((state: any) => state.questionsReducer);
-
-    // const deleteQuestionHandler = async (questionId: string) => {
-    //     await questionsClient.deleteQuestion(questionId);
-    //     dispatch(deleteQuestion(questionId));
-    // };
-
-    // const updateQuestionHandler = async (question: any) => {
-    //     await questionsClient.updateQuestion(question);
-    //     dispatch(updateQuestion(question));
-    // };
-
-
+    const addQuestionHandler = async () => {
+        try {
+            const newQuestion = await quizzesClient.createQuestionForQuiz(qid!, {
+                _id: Math.random().toString,
+                quiz: qid,
+                title: "New Question",
+                question: "Ask your question",
+                questionType: "Multiple choice",
+                points: 10,
+                choices: [
+                    "Option 1",
+                    "Option 2",
+                    "Option 3",
+                    "Option 4"
+                ],
+                correctAnswer: "Option 3",
+                editing: true
+            });
+            dispatch(addQuestion(newQuestion));
+        } catch (err) {
+            console.error("Error creating question:", err);
+            throw err;
+        }
+    };
 
     const fetchQuestionsForQuiz = async () => {
         const questions = await quizzesClient.findQuestionsForQuiz(qid!);
@@ -41,43 +54,10 @@ export default function QuestionsEditor() {
         <div className="m-5">
             <h4>Edit Quiz Questions</h4>
             {questions.map((question: any) => (
-                <Col className="wd-dashboard-course m-3" style={{ width: "600px" }} key={question._id}>
-                    <Card className="p-3 shadow-sm">
-                        <div className="mb-3 d-flex align-items-center">
-                            <h5 className="mb-0"><strong>{question.title}</strong></h5>
-                            <div className="ms-auto">
-                                <FaTrash className="text-danger me-3 cursor-pointer" />
-                                <FaPencil className="text-primary me-3 cursor-pointer" />
-                            </div>
-                        </div>
-                        <p><strong>Type:</strong> {question.questionType}</p>
-                        <p><strong>Points:</strong> {question.points}</p>
-                        <p><strong>Question:</strong> {question.question}</p>
-
-                        {question.questionType === "Multiple choice" ? (
-                            <div>
-                                <strong>Choices:</strong>
-                                <ul>
-                                    {question.choices.map((choice: string, index: number) => (
-                                        <li key={index}>
-                                            {choice}
-                                            {choice === question.correctAnswer && (
-                                                <span className="text-success fw-bold">  - Correct Answer</span>
-                                            )}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ) : (
-                            <p>
-                                <strong>Correct Answer:</strong> {question.correctAnswer}
-                            </p>
-                        )}
-                    </Card>
-                </Col>
+                <QuestionCard key={question._id} question={question} />
             ))}
             <div style={{ marginLeft: '23%' }}>
-                <Button variant="danger">+ Question</Button>
+                <Button variant="danger" onClick={addQuestionHandler}>+ Question</Button>
             </div>
             <br /><br /><br />
         </div >

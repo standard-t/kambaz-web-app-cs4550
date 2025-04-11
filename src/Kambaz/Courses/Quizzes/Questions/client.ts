@@ -1,7 +1,3 @@
-// questions client to make deleteQuestion and updateQuestion
-// createQuestion handled in Quiz Client 
-// need questions reducer to bring in mutable state objects for questionsEditor 
-// in questionsEditor.tsx bring in findQuestionsForQuiz to use on the quiz object that is passed in 
 
 import axios from "axios";
 const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;

@@ -1,0 +1,77 @@
+[
+    {
+        "_id": "example-attempt1",
+        "quiz": "example-quiz1",
+        "user": "777",
+        "answers": [
+            {
+                "question": "quiz1-q1",
+                "answer": "500",
+                "isCorrect": true
+            },
+            {
+                "question": "quiz1-q2",
+                "answer": "False",
+                "isCorrect": false
+            },
+            {
+                "question": "quiz1-q3",
+                "answer": "Italy",
+                "isCorrect": true
+            }
+        ],
+        "score": "45/50",
+        "attemptNumber": 1,
+        "timestamp": "2025-04-10T21:00:00.000Z"
+    },
+    {
+        "_id": "example-attempt2",
+        "quiz": "example-quiz1",
+        "user": "567",
+        "answers": [
+            {
+                "question": "quiz1-q1",
+                "answer": "300",
+                "isCorrect": false
+            },
+            {
+                "question": "quiz1-q2",
+                "answer": "False",
+                "isCorrect": false
+            },
+            {
+                "question": "quiz1-q3",
+                "answer": "Italy",
+                "isCorrect": true
+            }
+        ],
+        "score": "30/50",
+        "attemptNumber": 1,
+        "timestamp": "2025-03-10T21:00:00.000Z"
+    },
+    {
+        "_id": "example-attempt3",
+        "quiz": "example-quiz1",
+        "user": "567",
+        "answers": [
+            {
+                "question": "quiz1-q1",
+                "answer": "500",
+                "isCorrect": true
+            },
+            {
+                "question": "quiz1-q2",
+                "answer": "True",
+                "isCorrect": true
+            },
+            {
+                "question": "quiz1-q3",
+                "answer": "Italy",
+                "isCorrect": true
+            }
+        ],
+        "score": "50/50",
+        "attemptNumber": 2,
+        "timestamp": "2025-04-10T21:00:00.000Z"
+    }
+]

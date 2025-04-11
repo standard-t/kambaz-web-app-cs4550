@@ -41,16 +41,6 @@ export default function DetailsEditor({ quiz, setQuiz }: { quiz: any; setQuiz: (
                         </Form.Select>
                     </div>
                     <div className="wd-quiz-editor-detail mb-3">
-                        <label htmlFor="wd-quiz-points" className="form-label"><h6>Points:</h6></label>
-                        <Form.Control
-                            className="w-25"
-                            type="number"
-                            id="wd-quiz-points"
-                            onChange={(e) => setQuiz({ ...quiz, points: e.target.value })}
-                            value={quiz?.points}
-                        />
-                    </div>
-                    <div className="wd-quiz-editor-detail mb-3">
                         <Form.Label htmlFor="wd-quiz-group"><h6>Assignment Group:</h6></Form.Label>
                         <Form.Select
                             className="w-25"

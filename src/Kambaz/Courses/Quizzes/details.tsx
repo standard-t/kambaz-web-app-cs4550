@@ -33,7 +33,8 @@ export default function QuizDetails() {
         published: false,
         availableFrom: "2025-04-01",
         availableUntil: "2025-04-15",
-        score: 0
+        score: 0,
+        numberOfQuestions: 0
     });
 
     useEffect(() => {
@@ -52,7 +53,7 @@ export default function QuizDetails() {
                     <>
                         <div>
                             <Link className="btn bg-warning text-black me-2" to={`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}/editor`} >Edit</Link>
-                            <Button className="btn-primary text-white me-5">Preview</Button>
+                            <Link className="btn bg-primary text-white me-5" to={`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}/take-quiz`}>Preview</Link>
                         </div>
                     </>
                 )}
@@ -103,7 +104,7 @@ export default function QuizDetails() {
             {(currentUser.role === "STUDENT") && (
                 <>
                     <div className="d-flex justify-content-center align-items-center">
-                        <Button className="btn-danger text-white">Start Quiz</Button>
+                        <Link className="btn bg-danger text-white me-5" to={`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}/take-quiz`}>Start Quiz</Link>
                     </div>
                 </>
             )}
