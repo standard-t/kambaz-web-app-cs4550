@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { Card, Col, Form, Button } from "react-bootstrap";
+import { Card, Col } from "react-bootstrap";
 
 export default function QuizPreview() {
     const { qid, cid } = useParams();
@@ -37,7 +37,7 @@ export default function QuizPreview() {
             {questions.map((question: any) => (
                 <Col>
                     <Card className="p-3 m-3 shadow-sm">
-
+                        <h5>{question.title}</h5>
                     </Card>
                 </Col>
             ))}

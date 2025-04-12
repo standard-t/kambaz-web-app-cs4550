@@ -55,10 +55,10 @@ export default function QuizEditor() {
         dispatch(updateQuiz(quiz));
     };
 
-    const fetchQuestionsForQuiz = async () => {
-        const questions = await quizzesClient.findQuestionsForQuiz(qid!);
-        dispatch(setQuestions(questions)); // reloads from backend
-    };
+    // const fetchQuestionsForQuiz = async () => {
+    //     const questions = await quizzesClient.findQuestionsForQuiz(qid!);
+    //     dispatch(setQuestions(questions)); // reloads from backend
+    // };
 
 
     // const save = async () => {

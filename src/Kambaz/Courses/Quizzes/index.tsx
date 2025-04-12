@@ -23,7 +23,6 @@ export default function Quizzes() {
     const { cid } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { questions } = useSelector((state: any) => state.questionsReducer);
     const { quizzes } = useSelector((state: any) => state.quizzesReducer);
     const filteredQuizzes = currentUser?.role === "STUDENT"
         ? quizzes.filter((quiz: any) => quiz.published)

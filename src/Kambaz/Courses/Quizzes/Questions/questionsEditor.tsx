@@ -1,13 +1,10 @@
-import { Col, Card, Button } from "react-bootstrap";
-import { FaTrash } from "react-icons/fa";
+import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 // import { useNavigate } from "react-router-dom";
-import { setQuestions, deleteQuestion, updateQuestion, editQuestion, addQuestion } from "./reducer"; // delete update and add need to be imported as well 
+import { setQuestions, addQuestion } from "./reducer"; // delete update and add need to be imported as well 
 import * as quizzesClient from "../client";
-import * as questionsClient from "./client";
 import { useEffect } from "react";
-import { FaPencil } from "react-icons/fa6";
 import QuestionCard from "./questionCard";
 
 
