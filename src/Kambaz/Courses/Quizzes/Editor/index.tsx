@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import DetailsEditor from "./detailsEditor";
 import QuestionsEditor from "../Questions/questionsEditor";
 import { addQuiz, updateQuiz } from "../reducer";
-import { setQuestions } from "../Questions/reducer";
 import * as coursesClient from "../../client";
 import * as quizzesClient from "../client";
 
