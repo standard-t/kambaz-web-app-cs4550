@@ -16,7 +16,7 @@ export default function QuestionsEditor() {
     const addQuestionHandler = async () => {
         try {
             const newQuestion = await quizzesClient.createQuestionForQuiz(qid!, {
-                _id: Math.random().toString,
+                _id: Math.random().toString(),
                 quiz: qid,
                 title: "New Question",
                 question: "Ask your question",
