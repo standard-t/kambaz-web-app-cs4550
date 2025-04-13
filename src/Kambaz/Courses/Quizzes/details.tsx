@@ -1,17 +1,20 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IoArrowBackSharp } from "react-icons/io5";
-
+import * as quizzesClient from "./client";
+import { setAttempts } from "./Attempts/reducer";
 
 export default function QuizDetails() {
     const { qid, cid } = useParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const { quizzes } = useSelector((state: any) => state.quizzesReducer);
     const { currentUser } = useSelector((state: any) => state.accountReducer);
+    const { attempts } = useSelector((state: any) => state.attemptsReducer);
 
     const [quiz, setQuiz] = useState({
-        _id: Math.random().toString(),
+        _id: qid,
         creator: currentUser._id,
         course: cid,
         title: "New Quiz",
@@ -36,12 +39,45 @@ export default function QuizDetails() {
         numberOfQuestions: 0
     });
 
+    const fetchAttemptsForQuiz = async () => {
+        const attempts = await quizzesClient.findAttemptsForQuiz(qid!);
+        dispatch(setAttempts(attempts));
+    };
+
+    const formatSubmissionDate = (timestamp: string | Date) => {
+        const date = new Date(timestamp);
+
+        return date.toLocaleString("en-US", {
+            month: "long",        // "April"
+            day: "numeric",       // "13"
+            hour: "numeric",      // "3"
+            minute: "2-digit",    // "46"
+            hour12: true,         // "PM"
+        }).replace(",", " at");
+    };
+
+    const userAttemptsForQuiz = attempts
+        .filter((a: any) => a.quiz === qid && a.user === currentUser._id)
+        .sort((a: any, b: any) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+
+    const latestAttempt = userAttemptsForQuiz[0];
+    const latestScore = latestAttempt?.score;
+    const latestSubmissionDate = latestAttempt?.timestamp
+        ? formatSubmissionDate(latestAttempt.timestamp)
+        : "";
+
+
     useEffect(() => {
         const q = quizzes.find((q: any) => q._id === qid);
         if (q) {
             setQuiz(q);
         }
     }, [qid, cid, quizzes]);
+
+    useEffect(() => {
+        fetchAttemptsForQuiz();
+    }, [cid, currentUser]);
+
 
 
     return (
@@ -52,7 +88,7 @@ export default function QuizDetails() {
                     <>
                         <div>
                             <Link className="btn bg-warning text-black me-2" to={`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}/editor`} >Edit</Link>
-                            <Link className="btn bg-primary text-white me-5" to={`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}/take-quiz`}>Preview</Link>
+                            <Link className="btn bg-danger text-white me-5" to={`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}/take-quiz`}>Preview</Link>
                         </div>
                     </>
                 )}
@@ -78,7 +114,26 @@ export default function QuizDetails() {
             </p>
             <hr />
             <p><strong>Description: </strong>{quiz?.description}</p>
+            {latestAttempt &&
+                <div>
+                    <hr />
+                    <div className="d-flex justify-content-between align-items-start">
+                        <div>
+                            <p><strong>Submission: </strong> </p>
+                            <div className="ms-5">
+                                <p>
+                                    Score: <span className="text-danger"><strong>{latestScore}</strong></span> <br />
+                                    Submitted {latestSubmissionDate}
+                                </p>
+                            </div>
+                        </div>
+                        <div><Link className="btn bg-secondary text-black me-5" to={`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}/review`}>Review Submission</Link></div>
+                    </div>
+                </div>}
             <hr />
+
+
+
             <div className="d-flex justify-content-center align-items-center">
                 <div >
                     <strong>Quiz Type: </strong> {quiz.quizType} <br />
@@ -100,7 +155,7 @@ export default function QuizDetails() {
                 </div>
             </div>
             <hr />
-            {(currentUser.role === "STUDENT") && (
+            {(currentUser.role === "STUDENT") && (userAttemptsForQuiz.length < quiz.numberOfAttempts) && (
                 <>
                     <div className="d-flex justify-content-center align-items-center">
                         <Link className="btn bg-danger text-white me-5" to={`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}/take-quiz`}>Start Quiz</Link>

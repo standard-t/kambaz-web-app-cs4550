@@ -9,10 +9,12 @@ import { Button, ListGroup } from "react-bootstrap";
 import { deleteQuiz, setQuizzes, updateQuiz } from "./reducer";
 import * as coursesClient from "../client";
 import * as quizzesClient from "./client";
+import * as usersClient from "../../Account/client";
 import { useEffect, useState } from "react";
 import DeleteQuizPopUp from "./DeleteQuizPopup";
 import QuizActions from "./contextMenu";
 import { v4 as uuidv4 } from "uuid";
+import { setAttempts } from "./Attempts/reducer";
 
 
 
@@ -24,12 +26,14 @@ export default function Quizzes() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { quizzes } = useSelector((state: any) => state.quizzesReducer);
+    const { attempts } = useSelector((state: any) => state.attemptsReducer);
     const filteredQuizzes = currentUser?.role === "STUDENT"
         ? quizzes.filter((quiz: any) => quiz.published)
         : quizzes;
 
     const [show, setShow] = useState(false);
     const [selectedQuizId, setSelectedQuizId] = useState("");
+
 
 
     const handleShow = (quizId: string) => {
@@ -98,15 +102,21 @@ export default function Quizzes() {
         }
     };
 
+    const fetchAttemptsForUser = async () => {
+        const userAttempts = await usersClient.findAttemptsForUser(currentUser._id);
+        dispatch(setAttempts(userAttempts));
+    };
+
 
     useEffect(() => {
         fetchQuizzesForCourse();
-    }, [cid]);
+        fetchAttemptsForUser();
+    }, [cid, currentUser]);
 
 
     return (
-        <div>
-            <h4>Quizzes</h4>
+        <div className="mb-5">
+            <h3 >Quizzes</h3>
             {
                 currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") && (<>
                     <div className="d-flex justify-content-end">
@@ -123,51 +133,66 @@ export default function Quizzes() {
             }
             <ListGroup id="wd-quiz-list">
 
-                {filteredQuizzes.map((quiz: any) => (
-                    <ListGroup.Item key={quiz._id} className="wd-lesson p-3 ps-1">
-                        <BsGripVertical className=" me-2 fs-2" />
-                        <LuClipboardPen className="text-success fs-4 me-2" />
-                        <div className="float-end">
-                            {currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") && (<>
-                                {quiz.published ? (
-                                    <FaCheckCircle
-                                        className="text-success me-2"
-                                        onClick={() => togglePublishHandler(quiz)}
+                {filteredQuizzes.map((quiz: any) => {
+                    const userAttemptsForQuiz = attempts
+                        .filter((a: any) => a.quiz === quiz._id && a.user === currentUser._id)
+                        .sort((a: any, b: any) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+
+                    const latestAttempt = userAttemptsForQuiz[0];
+                    const latestScore = latestAttempt?.score;
+
+                    return (
+                        <ListGroup.Item key={quiz._id} className="wd-lesson p-3 ps-1">
+                            <BsGripVertical className=" me-2 fs-2" />
+                            <LuClipboardPen className="text-success fs-4 me-2" />
+                            <div className="float-end">
+                                {currentUser.role === 'STUDENT' && latestScore &&
+                                    <span className="me-3">
+                                        <strong> Score: </strong> {latestScore}
+                                    </span>}
+                                {currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") && (<>
+                                    {quiz.published ? (
+                                        <FaCheckCircle
+                                            className="text-success me-2"
+                                            onClick={() => togglePublishHandler(quiz)}
+                                        />
+                                    ) : (
+                                        <MdOutlineDoNotDisturb
+                                            className="me-2"
+                                            onClick={() => togglePublishHandler(quiz)}
+                                        />
+                                    )}
+                                    <QuizActions
+                                        onPublish={() => togglePublishHandler(quiz)}
+                                        onEdit={() => navigate(`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`)}
+                                        onDelete={() => handleShow(quiz._id)}
+                                        quiz={quiz}
                                     />
-                                ) : (
-                                    <MdOutlineDoNotDisturb
-                                        className="me-2"
-                                        onClick={() => togglePublishHandler(quiz)}
-                                    />
-                                )}
-                                <QuizActions
-                                    onPublish={() => togglePublishHandler(quiz)}
-                                    onEdit={() => navigate(`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`)}
-                                    onDelete={() => handleShow(quiz._id)}
-                                    quiz={quiz}
-                                />
-                            </>)}
-                        </div>
-                        <Link to={`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`} className="text-black text-decoration-none">
-                            {quiz.title}<br />
-                            <div className="wd-assignment-offset">
-                                <p>
-                                    <strong>Due: </strong>{formatDate(quiz.dueDate)}
-                                    <strong> Availability: </strong> {getAvailability(quiz.availableFrom, quiz.availableUntil)}
-                                    <strong> Points: </strong>{quiz.points}
-                                    <strong> Questions: </strong> {quiz.numberOfQuestions}
-                                    <br />{quiz.description}
-                                </p>
+                                </>)}
                             </div>
-                        </Link>
-                        <DeleteQuizPopUp
-                            deleteQuiz={(quizId) => deleteQuizHandler(quizId)}
-                            dialogTitle="Are you sure you want to delete this quiz?"
-                            show={show}
-                            handleClose={handleClose}
-                            quizId={selectedQuizId}
-                        />
-                    </ListGroup.Item>))}
+                            <Link to={`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`} className="text-black text-decoration-none">
+                                {quiz.title}<br />
+                                <div className="wd-assignment-offset">
+                                    <p>
+                                        <strong>Due: </strong>{formatDate(quiz.dueDate)}
+                                        <strong> Availability: </strong> {getAvailability(quiz.availableFrom, quiz.availableUntil)}
+                                        <br />
+                                        <strong> Points: </strong>{quiz.points}
+                                        <strong> Questions: </strong> {quiz.numberOfQuestions}
+                                        <br />
+                                        {quiz.description}
+                                    </p>
+                                </div>
+                            </Link>
+                            <DeleteQuizPopUp
+                                deleteQuiz={(quizId) => deleteQuizHandler(quizId)}
+                                dialogTitle="Are you sure you want to delete this quiz?"
+                                show={show}
+                                handleClose={handleClose}
+                                quizId={selectedQuizId}
+                            />
+                        </ListGroup.Item>)
+                })}
             </ListGroup>
         </div>
 

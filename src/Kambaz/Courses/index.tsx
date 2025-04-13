@@ -12,6 +12,7 @@ import QuizDetails from "./Quizzes/details";
 import QuizEditor from "./Quizzes/Editor";
 import QuizPreview from "./Quizzes/takeQuiz";
 import TakeQuiz from "./Quizzes/takeQuiz";
+import ReviewSubmission from "./Quizzes/ReviewSubmission";
 
 
 
@@ -40,6 +41,7 @@ export default function Courses({ courses }: { courses: any[] }) {
                         <Route path="Quizzes/:qid" element={<QuizDetails />} />
                         <Route path="Quizzes/:qid/editor" element={<QuizEditor />} />
                         <Route path="Quizzes/:qid/take-quiz" element={<TakeQuiz />} />
+                        <Route path="Quizzes/:qid/review" element={<ReviewSubmission />} />
                         <Route path="Grades" element={<h3>Grades</h3>} />
                         <Route path="Piazza" element={<h3>Piazza</h3>} />
                         <Route path="Zoom" element={<h3>Zoom</h3>} />

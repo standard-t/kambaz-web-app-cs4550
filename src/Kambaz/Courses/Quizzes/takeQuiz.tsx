@@ -4,7 +4,7 @@ import { setQuestions } from "./Questions/reducer";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import TakeQuestionCard from "./takeQuestionCard";
 import { setAttempts, addAttempt } from "./Attempts/reducer";
@@ -43,6 +43,7 @@ export default function TakeQuiz() {
         "availableUntilDate": "2025-04-15",
         "score": 99
     });
+
     const previousAttempts = attempts.filter(
         (a: any) => a.quiz === qid && a.user === currentUser._id
     );
@@ -158,7 +159,20 @@ export default function TakeQuiz() {
             <div className="d-flex mb-5 mt-5" style={{ marginLeft: '43%' }}>
                 <div>
                     <div className="form-group d-flex justify-content-end">
-                        <Button variant="danger" className="text-white" onClick={() => { handleSubmit(); navigate(`/Kambaz/Courses/${cid}/Quizzes/${qid}`); }}>Submit</Button>
+                        <Button
+                            variant="danger"
+                            className="text-white"
+                            onClick={() => {
+                                handleSubmit();
+                                const path =
+                                    currentUser.role === 'STUDENT'
+                                        ? `/Kambaz/Courses/${cid}/Quizzes/${qid}`
+                                        : `/Kambaz/Courses/${cid}/Quizzes/${qid}/review`;
+                                navigate(path);
+                            }}
+                        >
+                            Submit
+                        </Button>
                     </div>
 
                 </div>

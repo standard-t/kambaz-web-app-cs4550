@@ -84,6 +84,11 @@ export const unenrollFromCourse = async (userId: string, courseId: string) => {
     return response.data;
 };
 
+export const findAttemptsForUser = async (userId: string) => {
+    const response = await axiosWithCredentials.get(`${USERS_API}/${userId}/attempts`);
+    return response.data;
+};
+
 
 
 
