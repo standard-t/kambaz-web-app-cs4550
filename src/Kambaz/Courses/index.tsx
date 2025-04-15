@@ -10,7 +10,6 @@ import Quizzes from "./Quizzes";
 import PeopleForCourse from "./PeopleForCourse";
 import QuizDetails from "./Quizzes/details";
 import QuizEditor from "./Quizzes/Editor";
-import QuizPreview from "./Quizzes/takeQuiz";
 import TakeQuiz from "./Quizzes/takeQuiz";
 import ReviewSubmission from "./Quizzes/ReviewSubmission";
 

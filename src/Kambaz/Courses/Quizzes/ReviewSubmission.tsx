@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card, Button, Col, Row } from "react-bootstrap";
+import { Card, Button, Col } from "react-bootstrap";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router";
