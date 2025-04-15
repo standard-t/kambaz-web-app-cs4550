@@ -102,6 +102,8 @@ export default function Quizzes() {
         }
     };
 
+
+
     const fetchAttemptsForUser = async () => {
         const userAttempts = await usersClient.findAttemptsForUser(currentUser._id);
         dispatch(setAttempts(userAttempts));

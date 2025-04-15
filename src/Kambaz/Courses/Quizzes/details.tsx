@@ -155,7 +155,7 @@ export default function QuizDetails() {
                 </div>
             </div>
             <hr />
-            {(currentUser.role === "STUDENT") && (userAttemptsForQuiz.length < quiz.numberOfAttempts) && (
+            {(currentUser.role === "STUDENT") && (userAttemptsForQuiz.length < quiz.numberOfAttempts) && new Date(quiz.availableFrom) <= new Date() && new Date() <= new Date(quiz.availableUntil) && (
                 <>
                     <div className="d-flex justify-content-center align-items-center">
                         <Link className="btn bg-danger text-white me-5" to={`/Kambaz/Courses/${cid}/Quizzes/${quiz._id}/take-quiz`}>Start Quiz</Link>

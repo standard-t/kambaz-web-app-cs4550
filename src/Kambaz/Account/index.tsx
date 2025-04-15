@@ -4,7 +4,6 @@ import Signin from "./Signin";
 import Signup from "./Signup";
 import { useSelector } from "react-redux";
 import Users from "./Users";
-import AccountNavigation from "./Navigation";
 
 
 export default function Account() {
@@ -17,9 +16,6 @@ export default function Account() {
                     </td>
                     <td valign="top">
                         <div className="d-flex">
-                            <div className="m-2 me-3" >
-                                <AccountNavigation />
-                            </div>
                             <Routes>
                                 <Route path="/" element={<Navigate to={currentUser ? "Profile" : "Signin"} />} />
                                 <Route path="Signin" element={<Signin />} />
