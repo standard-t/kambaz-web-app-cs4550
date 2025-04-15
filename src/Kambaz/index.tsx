@@ -11,6 +11,7 @@ import Session from "./Account/Session";
 import { useSelector } from "react-redux";
 import * as courseClient from "./Courses/client";
 import * as userClient from "./Account/client";
+import ProjectInfo from "../Project Info";
 
 
 
@@ -137,6 +138,7 @@ export default function Kambaz() {
                         <Route path="Calendar" element={<h1>Calendar</h1>} />
                         <Route path="History" element={<h1>History</h1>} />
                         <Route path="Help" element={<h1>Help</h1>} />
+                        <Route path="Project" element={<ProjectInfo />} />
                     </Routes>
                 </div>
             </div >

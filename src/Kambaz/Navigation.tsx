@@ -5,6 +5,7 @@ import { IoMdSpeedometer } from "react-icons/io";
 import { LuBookText, LuInbox, LuCalendarDays, LuClock8 } from "react-icons/lu";
 import { HiOutlineBeaker } from "react-icons/hi";
 import { BiHelpCircle } from "react-icons/bi";
+import { FaRegClipboard } from "react-icons/fa";
 
 
 
@@ -19,7 +20,8 @@ export default function KambazNavigation() {
         { to: "/Kambaz/Calendar", icon: LuCalendarDays, text: "Calendar" },
         { to: "/Kambaz/History", icon: LuClock8, text: "History" },
         { to: "/Kambaz/Help", icon: BiHelpCircle, text: "Help" },
-        { to: "/Kambaz/Labs", icon: HiOutlineBeaker, text: "Labs" }
+        { to: "/Kambaz/Labs", icon: HiOutlineBeaker, text: "Labs" },
+        { to: "/Kambaz/Project", icon: FaRegClipboard, text: "Project" }
     ]
 
     return (
