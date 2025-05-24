@@ -19,7 +19,7 @@ The back-end was developed using MongoDB, Express.js, and JavaScript, and is now
 
 Real-time database interaction for courses, users, assignments, and quizzes <br/>
 
-Role-based user authentication using JWT (Student or Faculty) <br/>
+Role-based user authentication (Student or Faculty) <br/>
 
 Secure login, signup, and session management <br/>
 
@@ -62,4 +62,4 @@ Cannot access unpublished quizzes or edit quiz content <br/>
 
 All student quiz attempts are stored individually, ensuring each user sees only their own results and progress. The interface clearly shows quiz availability, due dates, score feedback, and status (published/unpublished). Quizzes default to unpublished and can be toggled with a ✅/🚫 icon.
 
-This project demonstrates the use of React.js and TypeScript for dynamic front-end development while delivering a fully functional, secure back-end system. The Kambaz platform sets the foundation for scalable academic tools with a clean, modern user experience.
+This project demonstrates the use of React.js and TypeScript for dynamic front-end development while delivering a fully functional, secure back-end system. The Kambaz platform sets the foundation for scalable academic tools with a clean, user experience.
