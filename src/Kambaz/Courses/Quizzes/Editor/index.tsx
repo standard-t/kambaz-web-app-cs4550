@@ -54,22 +54,7 @@ export default function QuizEditor() {
         dispatch(updateQuiz(quiz));
     };
 
-    // const fetchQuestionsForQuiz = async () => {
-    //     const questions = await quizzesClient.findQuestionsForQuiz(qid!);
-    //     dispatch(setQuestions(questions)); // reloads from backend
-    // };
 
-
-    // const save = async () => {
-    //     if (qid === 'New') {
-    //         await addQuizHandler();
-    //         navigate(`/Kambaz/Courses/${cid}/Quizzes`);
-    //     } else {
-    //         await updateQuizHandler(quiz);
-    //         navigate(`/Kambaz/Courses/${cid}/Quizzes/${qid}`);
-    //     }
-    //     console.log(quizzes)
-    // };
 
     const save = async () => {
         // Step 1: Filter questions that belong to this quiz
