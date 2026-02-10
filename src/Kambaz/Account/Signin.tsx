@@ -39,8 +39,7 @@ export default function Signin() {
                 variant="primary" className="w-100" > Sign in </Button>
             <Link id="wd-signup-link" to="/Kambaz/Account/Signup">
                 Sign up </Link>
-            <body><strong>Admin Username: </strong>Ada <strong>Admin Password: </strong>123</body>
-            <br/> <body>Or Sign Up for Student Account!</body>
+            <body><strong>Admin Username: </strong>Ada <strong>Admin Password: </strong>123 <br/> Or Sign Up for Student Account!</body>
         </div>
     );
 }
